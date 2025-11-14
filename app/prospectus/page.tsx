@@ -296,7 +296,7 @@ export default function ProspectusPage() {
                     {categorySkills.map(skill => (
                       <div key={skill.name} className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="text-lg">{skill.icon}</span>
+                          <span className="text-lg">{skill.icon_name}</span>
                           <span className="text-sm text-stock-text/80">
                             {skill.name}
                           </span>

@@ -139,21 +139,23 @@ export default function FinancialInstrumentsPage() {
                     </div>
 
                     {/* Technologies */}
-                    <div className="mb-4">
-                      <div className="text-xs text-stock-text/40 mb-2 uppercase">
-                        Tech Stack
+                    {project.technologies && project.technologies.length > 0 && (
+                      <div className="mb-4">
+                        <div className="text-xs text-stock-text/40 mb-2 uppercase">
+                          Tech Stack
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.technologies.map(tech => (
+                            <span
+                              key={tech}
+                              className="px-2 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded font-mono"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.technologies.map(tech => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded font-mono"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    )}
 
                     {/* Impact */}
                     {project.impact && (
@@ -168,19 +170,19 @@ export default function FinancialInstrumentsPage() {
                     )}
 
                     {/* Links */}
-                    <div className="flex gap-2">
-                      {project.live_url && (
+                    {project.github_url && (
+                      <div className="flex gap-2">
                         <a
-                          href={project.live_url}
+                          href={project.github_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 px-4 py-2 bg-stock-green/20 hover:bg-stock-green/30 text-stock-green text-sm rounded transition-colors flex items-center justify-center gap-2 font-mono"
+                          className="flex-1 px-4 py-2 bg-stock-cyan/20 hover:bg-stock-cyan/30 text-stock-cyan text-sm rounded transition-colors flex items-center justify-center gap-2 font-mono"
                         >
                           <FiExternalLink size={16} />
-                          Launch Platform
+                          View Source
                         </a>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -205,13 +207,15 @@ export default function FinancialInstrumentsPage() {
                         {analysis.company_name}
                       </h3>
                       <div className="text-sm text-stock-text/60 font-mono">
-                        {analysis.ticker} • {analysis.sector}
+                        {analysis.ticker}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xs text-stock-text/40">
-                        {new Date(analysis.analysis_date).toLocaleDateString()}
-                      </div>
+                      {analysis.analysis_date && (
+                        <div className="text-xs text-stock-text/40">
+                          {new Date(analysis.analysis_date).toLocaleDateString()}
+                        </div>
+                      )}
                       <div
                         className={`mt-1 text-lg font-mono font-bold ${
                           analysis.recommendation === 'BUY'
@@ -228,59 +232,63 @@ export default function FinancialInstrumentsPage() {
 
                   {/* Summary */}
                   <p className="text-sm text-stock-text/70 mb-4">
-                    {analysis.summary}
+                    {analysis.executive_summary}
                   </p>
 
                   {/* Valuation Metrics */}
-                  <div className="grid grid-cols-3 gap-4 mb-4 pb-4 border-b border-stock-navy/50">
-                    <div>
-                      <div className="text-xs text-stock-text/40 mb-1">
-                        Current
+                  {analysis.target_price && analysis.current_price && (
+                    <div className="grid grid-cols-3 gap-4 mb-4 pb-4 border-b border-stock-navy/50">
+                      <div>
+                        <div className="text-xs text-stock-text/40 mb-1">
+                          Current
+                        </div>
+                        <div className="text-stock-cyan font-mono text-sm font-bold">
+                          ${analysis.current_price}
+                        </div>
                       </div>
-                      <div className="text-stock-cyan font-mono text-sm font-bold">
-                        ${analysis.current_price}
+                      <div>
+                        <div className="text-xs text-stock-text/40 mb-1">
+                          Target
+                        </div>
+                        <div className="text-stock-green font-mono text-sm font-bold">
+                          ${analysis.target_price}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-stock-text/40 mb-1">
+                          Upside
+                        </div>
+                        <div className="text-stock-gold font-mono text-sm font-bold">
+                          {(
+                            ((analysis.target_price - analysis.current_price) /
+                              analysis.current_price) *
+                            100
+                          ).toFixed(1)}
+                          %
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <div className="text-xs text-stock-text/40 mb-1">
-                        Target
-                      </div>
-                      <div className="text-stock-green font-mono text-sm font-bold">
-                        ${analysis.target_price}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-stock-text/40 mb-1">
-                        Upside
-                      </div>
-                      <div className="text-stock-gold font-mono text-sm font-bold">
-                        {(
-                          ((analysis.target_price - analysis.current_price) /
-                            analysis.current_price) *
-                          100
-                        ).toFixed(1)}
-                        %
-                      </div>
-                    </div>
-                  </div>
+                  )}
 
                   {/* Key Insights */}
-                  <div>
-                    <div className="text-xs text-stock-text/40 mb-2 uppercase">
-                      Key Insights
+                  {analysis.key_findings && analysis.key_findings.length > 0 && (
+                    <div>
+                      <div className="text-xs text-stock-text/40 mb-2 uppercase">
+                        Key Findings
+                      </div>
+                      <ul className="space-y-1.5">
+                        {analysis.key_findings.slice(0, 3).map((insight, i) => (
+                          <li
+                            key={i}
+                            className="text-sm text-stock-text/70 flex items-start gap-2"
+                          >
+                            <span className="text-stock-cyan mt-0.5">•</span>
+                            <span>{insight}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="space-y-1.5">
-                      {analysis.key_insights.slice(0, 3).map((insight, i) => (
-                        <li
-                          key={i}
-                          className="text-sm text-stock-text/70 flex items-start gap-2"
-                        >
-                          <span className="text-stock-cyan mt-0.5">•</span>
-                          <span>{insight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>

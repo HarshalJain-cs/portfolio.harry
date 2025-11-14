@@ -53,7 +53,7 @@ export default function ResearchPapersPage() {
               </div>
               <div className="text-center p-6 bg-stock-dark/50 border border-stock-navy">
                 <div className="text-4xl font-heading text-stock-green mb-2 font-black">
-                  {new Set(researchPapers.flatMap(p => p.co_authors || [])).size + researchPapers.length}
+                  {new Set(researchPapers.flatMap(p => p.coauthors || [])).size + researchPapers.length}
                 </div>
                 <div className="text-xs text-stock-text/60 uppercase">
                   Collaborators
@@ -61,7 +61,7 @@ export default function ResearchPapersPage() {
               </div>
               <div className="text-center p-6 bg-stock-dark/50 border border-stock-navy">
                 <div className="text-4xl font-heading text-stock-gold mb-2 font-black">
-                  {new Set(researchPapers.map(p => p.field)).size}
+                  {new Set(researchPapers.map(p => p.category).filter(Boolean)).size}
                 </div>
                 <div className="text-xs text-stock-text/60 uppercase">
                   Research Fields
@@ -69,10 +69,10 @@ export default function ResearchPapersPage() {
               </div>
               <div className="text-center p-6 bg-stock-dark/50 border border-stock-navy">
                 <div className="text-4xl font-heading text-stock-cyan mb-2 font-black">
-                  {researchPapers.filter(p => p.status === 'Published').length}
+                  {researchPapers.reduce((sum, p) => sum + (p.citation_count || 0), 0)}
                 </div>
                 <div className="text-xs text-stock-text/60 uppercase">
-                  Published
+                  Citations
                 </div>
               </div>
             </div>
@@ -90,23 +90,19 @@ export default function ResearchPapersPage() {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <div
-                      className={`inline-block px-3 py-1 rounded mb-3 text-xs font-mono uppercase ${
-                        paper.status === 'Published'
-                          ? 'bg-stock-green/20 text-stock-green border border-stock-green/50'
-                          : paper.status === 'Under Review'
-                          ? 'bg-stock-cyan/20 text-stock-cyan border border-stock-cyan/50'
-                          : 'bg-stock-gold/20 text-stock-gold border border-stock-gold/50'
-                      }`}
-                    >
-                      {paper.status}
-                    </div>
+                    {paper.category && (
+                      <div className="inline-block px-3 py-1 rounded mb-3 text-xs font-mono uppercase bg-stock-cyan/20 text-stock-cyan border border-stock-cyan/50">
+                        {paper.category}
+                      </div>
+                    )}
                     <h2 className="text-2xl md:text-3xl font-heading text-stock-cyan mb-3">
                       {paper.title}
                     </h2>
-                    <div className="text-sm text-stock-text/60">
-                      {paper.field} • {new Date(paper.publication_date).getFullYear()}
-                    </div>
+                    {paper.publication_date && (
+                      <div className="text-sm text-stock-text/60">
+                        {new Date(paper.publication_date).getFullYear()}
+                      </div>
+                    )}
                   </div>
                   <FiFileText className="text-4xl text-stock-gold/40 flex-shrink-0 ml-4" />
                 </div>
@@ -119,10 +115,10 @@ export default function ResearchPapersPage() {
                   </div>
                   <div className="text-sm text-stock-text/90">
                     <span className="font-bold text-stock-gold">Harshal Jain</span>
-                    {paper.co_authors && paper.co_authors.length > 0 && (
+                    {paper.coauthors && paper.coauthors.length > 0 && (
                       <>
                         {', '}
-                        {paper.co_authors.join(', ')}
+                        {paper.coauthors.join(', ')}
                       </>
                     )}
                   </div>
@@ -138,51 +134,23 @@ export default function ResearchPapersPage() {
                   </p>
                 </div>
 
-                {/* Key Findings */}
-                {paper.key_findings && paper.key_findings.length > 0 && (
-                  <div className="mb-6 p-4 bg-stock-navy/30 border-l-4 border-stock-green rounded">
-                    <h3 className="text-sm font-mono text-stock-green mb-3 uppercase">
-                      Key Findings
-                    </h3>
-                    <ul className="space-y-2">
-                      {paper.key_findings.map((finding, i) => (
-                        <li
-                          key={i}
-                          className="text-sm text-stock-text/80 flex items-start gap-2"
-                        >
-                          <span className="text-stock-green mt-1">▸</span>
-                          <span>{finding}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
                 {/* Metadata */}
                 <div className="grid md:grid-cols-2 gap-4 mb-6">
-                  {paper.journal && (
+                  {paper.publication_date && (
                     <div>
                       <div className="text-xs text-stock-text/40 mb-1 uppercase">
-                        Published In
+                        Publication Date
                       </div>
-                      <div className="text-sm text-stock-cyan font-mono">
-                        {paper.journal}
+                      <div className="text-sm text-stock-text/80 flex items-center gap-2">
+                        <FiCalendar size={14} className="text-stock-cyan" />
+                        {new Date(paper.publication_date).toLocaleDateString('en-US', {
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })}
                       </div>
                     </div>
                   )}
-                  <div>
-                    <div className="text-xs text-stock-text/40 mb-1 uppercase">
-                      Publication Date
-                    </div>
-                    <div className="text-sm text-stock-text/80 flex items-center gap-2">
-                      <FiCalendar size={14} className="text-stock-cyan" />
-                      {new Date(paper.publication_date).toLocaleDateString('en-US', {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
-                    </div>
-                  </div>
                   {paper.doi && (
                     <div>
                       <div className="text-xs text-stock-text/40 mb-1 uppercase">
@@ -193,13 +161,13 @@ export default function ResearchPapersPage() {
                       </div>
                     </div>
                   )}
-                  {paper.citations_count !== undefined && (
+                  {paper.citation_count !== undefined && (
                     <div>
                       <div className="text-xs text-stock-text/40 mb-1 uppercase">
                         Citations
                       </div>
                       <div className="text-sm text-stock-gold font-mono">
-                        {paper.citations_count} citations
+                        {paper.citation_count} citations
                       </div>
                     </div>
                   )}

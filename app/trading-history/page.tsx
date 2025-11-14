@@ -64,7 +64,7 @@ export default function TradingHistoryPage() {
               </div>
               <div className="text-center p-6 bg-stock-dark/50 border border-stock-navy">
                 <div className="text-4xl font-heading text-stock-gold mb-2 font-black">
-                  {new Set(experiences.map(e => e.company)).size}
+                  {new Set(experiences.map(e => e.company_name)).size}
                 </div>
                 <div className="text-xs text-stock-text/60 uppercase">
                   Companies
@@ -103,7 +103,7 @@ export default function TradingHistoryPage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2 flex-wrap">
                             <h3 className="text-2xl font-heading text-stock-cyan">
-                              {exp.title}
+                              {exp.position_title}
                             </h3>
                             {!exp.end_date && (
                               <span className="px-2 py-1 bg-stock-green/20 text-stock-green text-xs font-mono rounded border border-stock-green/50">
@@ -112,7 +112,7 @@ export default function TradingHistoryPage() {
                             )}
                           </div>
                           <div className="text-lg text-stock-gold mb-2">
-                            {exp.company}
+                            {exp.company_name}
                           </div>
                           <div className="flex flex-wrap items-center gap-3 text-sm text-stock-text/60">
                             <span className="px-2 py-1 bg-stock-navy/50 rounded font-mono">
@@ -143,14 +143,14 @@ export default function TradingHistoryPage() {
                       </p>
 
                       {/* Key Achievements */}
-                      {exp.key_achievements && exp.key_achievements.length > 0 && (
+                      {exp.achievements && exp.achievements.length > 0 && (
                         <div className="mb-6 p-4 bg-stock-green/10 border-l-4 border-stock-green rounded">
                           <h4 className="text-sm font-mono text-stock-green mb-3 uppercase flex items-center gap-2">
                             <FiTrendingUp size={16} />
                             Key Achievements
                           </h4>
                           <ul className="space-y-2">
-                            {exp.key_achievements.map((achievement, i) => (
+                            {exp.achievements.map((achievement, i) => (
                               <li
                                 key={i}
                                 className="text-sm text-stock-text/80 flex items-start gap-2"
@@ -164,13 +164,13 @@ export default function TradingHistoryPage() {
                       )}
 
                       {/* Technologies */}
-                      {exp.technologies && exp.technologies.length > 0 && (
+                      {exp.skills_used && exp.skills_used.length > 0 && (
                         <div>
                           <div className="text-xs text-stock-text/40 mb-2 uppercase">
                             Technologies Used
                           </div>
                           <div className="flex flex-wrap gap-2">
-                            {exp.technologies.map(tech => (
+                            {exp.skills_used.map(tech => (
                               <span
                                 key={tech}
                                 className="px-3 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded-full font-mono"

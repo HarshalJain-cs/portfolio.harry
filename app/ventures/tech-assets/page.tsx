@@ -29,9 +29,9 @@ export default function TechAssetsPage() {
         searchQuery === '' ||
         project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.technologies.some(tech =>
+        (project.technologies && project.technologies.some(tech =>
           tech.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        ))
 
       const matchesCategory =
         selectedCategory === 'all' || project.category === selectedCategory
@@ -212,18 +212,19 @@ export default function TechAssetsPage() {
                     </div>
 
                     {/* Technologies */}
-                    <div className="mb-4">
-                      <div className="text-xs text-stock-text/40 mb-2 uppercase">
-                        Tech Stack
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.technologies.slice(0, 4).map(tech => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded font-mono"
-                          >
-                            {tech}
-                          </span>
+                    {project.technologies && project.technologies.length > 0 && (
+                      <div className="mb-4">
+                        <div className="text-xs text-stock-text/40 mb-2 uppercase">
+                          Tech Stack
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.technologies.slice(0, 4).map(tech => (
+                            <span
+                              key={tech}
+                              className="px-2 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded font-mono"
+                            >
+                              {tech}
+                            </span>
                         ))}
                         {project.technologies.length > 4 && (
                           <span className="px-2 py-1 text-stock-cyan text-xs font-mono">
@@ -231,7 +232,8 @@ export default function TechAssetsPage() {
                           </span>
                         )}
                       </div>
-                    </div>
+                      </div>
+                    )}
 
                     {/* Links */}
                     <div className="flex gap-2">
@@ -244,17 +246,6 @@ export default function TechAssetsPage() {
                         >
                           <FiGithub size={16} />
                           Code
-                        </a>
-                      )}
-                      {project.live_url && (
-                        <a
-                          href={project.live_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 px-3 py-2 bg-stock-green/20 hover:bg-stock-green/30 text-stock-green text-sm rounded transition-colors flex items-center justify-center gap-2 font-mono"
-                        >
-                          <FiExternalLink size={16} />
-                          Live
                         </a>
                       )}
                     </div>

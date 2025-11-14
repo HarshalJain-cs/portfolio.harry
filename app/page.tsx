@@ -257,7 +257,7 @@ export default function TradingFloorPage() {
                     className="p-4 bg-stock-dark/50 border border-stock-navy hover:border-stock-cyan transition-colors"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-lg">{skill.icon}</span>
+                      <span className="text-lg">{skill.icon_name}</span>
                       <span className="text-xs text-stock-text/40 font-mono">
                         {skill.category.toUpperCase()}
                       </span>

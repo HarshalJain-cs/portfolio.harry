@@ -12,7 +12,7 @@ import Link from 'next/link'
 
 export default function CommunityDividendsPage() {
   // Calculate total hours
-  const totalHours = volunteering.reduce((sum, v) => sum + v.hours_contributed, 0)
+  const totalHours = volunteering.reduce((sum, v) => sum + (v.hours_contributed || 0), 0)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -64,7 +64,7 @@ export default function CommunityDividendsPage() {
               </div>
               <div className="text-center p-6 bg-stock-dark/50 border border-stock-navy">
                 <div className="text-4xl font-heading text-stock-gold mb-2 font-black">
-                  {new Set(volunteering.map(v => v.cause)).size}
+                  {new Set(volunteering.map(v => v.category).filter(Boolean)).size}
                 </div>
                 <div className="text-xs text-stock-text/60 uppercase">
                   Causes Supported
@@ -72,7 +72,7 @@ export default function CommunityDividendsPage() {
               </div>
               <div className="text-center p-6 bg-stock-dark/50 border border-stock-navy">
                 <div className="text-4xl font-heading text-stock-green mb-2 font-black">
-                  {volunteering.filter(v => v.ongoing).length}
+                  {volunteering.filter(v => v.is_ongoing).length}
                 </div>
                 <div className="text-xs text-stock-text/60 uppercase">
                   Ongoing
@@ -97,7 +97,7 @@ export default function CommunityDividendsPage() {
                       <h2 className="text-2xl font-heading text-stock-cyan">
                         {vol.organization}
                       </h2>
-                      {vol.ongoing && (
+                      {vol.is_ongoing && (
                         <span className="px-2 py-1 bg-stock-green/20 text-stock-green text-xs font-mono rounded border border-stock-green/50">
                           ONGOING
                         </span>
@@ -106,9 +106,11 @@ export default function CommunityDividendsPage() {
                     <div className="text-lg text-stock-gold mb-2">
                       {vol.role}
                     </div>
-                    <div className="text-sm text-stock-text/60">
-                      {vol.cause}
-                    </div>
+                    {vol.category && (
+                      <div className="text-sm text-stock-text/60">
+                        {vol.category}
+                      </div>
+                    )}
                   </div>
                   <FiHeart className="text-4xl text-stock-green/40 flex-shrink-0 ml-4" />
                 </div>
@@ -117,26 +119,6 @@ export default function CommunityDividendsPage() {
                 <p className="text-sm text-stock-text/80 mb-6 leading-relaxed">
                   {vol.description}
                 </p>
-
-                {/* Key Contributions */}
-                {vol.key_contributions && vol.key_contributions.length > 0 && (
-                  <div className="mb-6 p-4 bg-stock-navy/30 border-l-4 border-stock-green rounded">
-                    <h3 className="text-sm font-mono text-stock-green mb-3 uppercase">
-                      Key Contributions
-                    </h3>
-                    <ul className="space-y-2">
-                      {vol.key_contributions.map((contribution, i) => (
-                        <li
-                          key={i}
-                          className="text-sm text-stock-text/80 flex items-start gap-2"
-                        >
-                          <span className="text-stock-green mt-1">▸</span>
-                          <span>{contribution}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
 
                 {/* Impact */}
                 {vol.impact && (
@@ -166,15 +148,17 @@ export default function CommunityDividendsPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <FiUsers className="text-stock-green" />
-                    <div>
-                      <div className="text-xs text-stock-text/40">Hours</div>
-                      <div className="text-stock-green font-mono font-bold">
-                        {vol.hours_contributed.toLocaleString()} hrs
+                  {vol.hours_contributed && (
+                    <div className="flex items-center gap-2 text-sm">
+                      <FiUsers className="text-stock-green" />
+                      <div>
+                        <div className="text-xs text-stock-text/40">Hours</div>
+                        <div className="text-stock-green font-mono font-bold">
+                          {vol.hours_contributed.toLocaleString()} hrs
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                   {vol.location && (
                     <div className="flex items-center gap-2 text-sm">
                       <FiMapPin className="text-stock-gold" />
@@ -187,25 +171,6 @@ export default function CommunityDividendsPage() {
                     </div>
                   )}
                 </div>
-
-                {/* Skills Used */}
-                {vol.skills_used && vol.skills_used.length > 0 && (
-                  <div>
-                    <div className="text-xs text-stock-text/40 mb-2 uppercase">
-                      Skills Applied
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {vol.skills_used.map(skill => (
-                        <span
-                          key={skill}
-                          className="px-3 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded-full font-mono"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
           </div>
