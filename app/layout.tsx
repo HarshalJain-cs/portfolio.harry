@@ -5,6 +5,9 @@
 
 import type { Metadata } from 'next'
 import '../styles/globals.css'
+import { ThemeProvider } from '@/contexts/ThemeContext'
+import { SoundProvider } from '@/contexts/SoundContext'
+import { AnimationProvider } from '@/contexts/AnimationContext'
 
 // SEO Metadata
 export const metadata: Metadata = {
@@ -108,7 +111,11 @@ export default function RootLayout({
         )}
       </head>
       <body className="min-h-screen">
-        {children}
+        <ThemeProvider>
+          <SoundProvider>
+            <AnimationProvider>{children}</AnimationProvider>
+          </SoundProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
