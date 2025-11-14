@@ -7,7 +7,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import StockTicker from '@/components/layout/StockTicker'
 import { competitions } from '@/lib/data'
-import { FiTrophy, FiAward, FiUsers, FiCalendar, FiExternalLink } from 'react-icons/fi'
+import { FiAward, FiUsers, FiCalendar, FiExternalLink } from 'react-icons/fi'
 import Link from 'next/link'
 
 export default function TournamentsPage() {
@@ -41,7 +41,7 @@ export default function TournamentsPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center space-y-4">
               <div className="inline-block px-4 py-2 bg-stock-gold/10 border border-stock-gold/30 rounded-full text-stock-gold text-sm font-mono uppercase tracking-wider mb-2">
-                <FiTrophy className="inline mr-2 mb-1" />
+                <FiAward className="inline mr-2 mb-1" />
                 Market Tournaments
               </div>
 

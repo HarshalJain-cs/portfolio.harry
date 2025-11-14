@@ -16,7 +16,7 @@ export default function TradingFloorPage() {
 
   // Get top skills by rating
   const topSkills = skills
-    .sort((a, b) => b.rating - a.rating)
+    .sort((a, b) => (b.proficiency || 0) - (a.proficiency || 0))
     .slice(0, 8)
 
   return (
@@ -195,7 +195,7 @@ export default function TradingFloorPage() {
 
                   {/* Description */}
                   <p className="text-sm text-stock-text/70 mb-4 line-clamp-2">
-                    {project.short_description}
+                    {project.tagline}
                   </p>
 
                   {/* Metrics */}
@@ -215,16 +215,18 @@ export default function TradingFloorPage() {
                   </div>
 
                   {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {project.technologies.slice(0, 3).map(tech => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded font-mono"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                  {project.technologies && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {project.technologies.slice(0, 3).map(tech => (
+                        <span
+                          key={tech}
+                          className="px-2 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded font-mono"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </Link>
               ))}
             </div>
@@ -268,7 +270,7 @@ export default function TradingFloorPage() {
                         <div
                           key={i}
                           className={`w-2 h-2 rounded-full ${
-                            i < skill.rating
+                            i < (skill.proficiency || 0)
                               ? 'bg-stock-green'
                               : 'bg-stock-navy'
                           }`}

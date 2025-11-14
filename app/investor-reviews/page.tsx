@@ -7,7 +7,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import StockTicker from '@/components/layout/StockTicker'
 import { testimonials } from '@/lib/data'
-import { FiStar, FiUser, FiLinkedin, FiQuote } from 'react-icons/fi'
+import { FiStar, FiUser, FiLinkedin } from 'react-icons/fi'
 import Link from 'next/link'
 
 export default function InvestorReviewsPage() {
@@ -91,7 +91,7 @@ export default function InvestorReviewsPage() {
                   </div>
                   <div className="text-center p-4 bg-stock-dark/50 border border-stock-navy">
                     <div className="text-3xl font-heading text-stock-cyan mb-1 font-black">
-                      {testimonials.filter(t => t.verified).length}
+                      {testimonials.filter(t => t.is_featured).length}
                     </div>
                     <div className="text-xs text-stock-text/60 uppercase">
                       Verified
@@ -113,7 +113,7 @@ export default function InvestorReviewsPage() {
               >
                 {/* Quote Icon */}
                 <div className="mb-4">
-                  <FiQuote className="text-4xl text-stock-gold/30" />
+                  <div className="text-4xl text-stock-gold/30">"</div>
                 </div>
 
                 {/* Rating */}
@@ -122,7 +122,7 @@ export default function InvestorReviewsPage() {
                     <FiStar
                       key={i}
                       className={`${
-                        i < testimonial.rating
+                        i < (testimonial.rating || 0)
                           ? 'text-stock-gold fill-stock-gold'
                           : 'text-stock-navy'
                       }`}
@@ -133,7 +133,7 @@ export default function InvestorReviewsPage() {
 
                 {/* Testimonial Text */}
                 <p className="text-sm text-stock-text/80 mb-6 leading-relaxed flex-1 italic">
-                  "{testimonial.testimonial}"
+                  "{testimonial.testimonial_text}"
                 </p>
 
                 {/* Author Info */}
@@ -144,18 +144,18 @@ export default function InvestorReviewsPage() {
                         <h4 className="font-heading text-stock-cyan">
                           {testimonial.name}
                         </h4>
-                        {testimonial.verified && (
+                        {testimonial.is_featured && (
                           <span className="text-stock-green" title="Verified">
                             ✓
                           </span>
                         )}
                       </div>
                       <div className="text-xs text-stock-text/60 mb-1">
-                        {testimonial.position}
+                        {testimonial.designation}
                       </div>
-                      {testimonial.company && (
+                      {testimonial.organization && (
                         <div className="text-xs text-stock-gold">
-                          {testimonial.company}
+                          {testimonial.organization}
                         </div>
                       )}
                       <div className="text-xs text-stock-text/40 mt-2 font-mono">

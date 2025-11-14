@@ -44,7 +44,7 @@
   }
 
   * {
-    @apply border-border;
+    border-color: rgb(var(--stock-navy) / 0.2);
   }
 
   html {
@@ -52,7 +52,9 @@
   }
 
   body {
-    @apply font-body antialiased;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     background-color: rgb(var(--bg-primary));
     color: rgb(var(--text-primary));
     background-image: linear-gradient(
@@ -74,33 +76,58 @@
   h4,
   h5,
   h6 {
-    @apply font-heading font-bold;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
+    font-size: 2.25rem;
+  }
+
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h1 {
+      font-size: 3.75rem;
+    }
   }
 
   h2 {
-    @apply text-3xl md:text-4xl;
+    font-size: 1.875rem;
+  }
+
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 2.25rem;
+    }
   }
 
   h3 {
-    @apply text-2xl md:text-3xl;
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    h3 {
+      font-size: 1.875rem;
+    }
   }
 
   /* Code and numbers */
   code,
   .ticker-number,
   .stock-price {
-    @apply font-mono;
+    font-family: 'Roboto Mono', monospace;
   }
 }
 
 @layer components {
   /* Stock Exchange Border Style */
   .stock-border {
-    @apply border-2 border-stock-navy;
+    border: 2px solid #000080;
     box-shadow: 0 0 10px rgba(0, 0, 128, 0.3);
   }
 
@@ -114,40 +141,78 @@
 
   /* Button Styles */
   .btn-primary {
-    @apply bg-stock-navy text-white px-6 py-3 rounded font-bold
-           hover:bg-opacity-80 transition-all duration-200
-           hover:scale-105 hover:shadow-stock-glow;
+    background-color: #000080;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
   }
 
   .btn-success {
-    @apply bg-stock-green text-black px-6 py-3 rounded font-bold
-           hover:bg-opacity-80 transition-all duration-200
-           hover:scale-105;
+    background-color: #00FF00;
+    color: black;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+
+  .btn-success:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
   }
 
   .btn-danger {
-    @apply bg-stock-red text-white px-6 py-3 rounded font-bold
-           hover:bg-opacity-80 transition-all duration-200
-           hover:scale-105;
+    background-color: #FF0000;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+
+  .btn-danger:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
   }
 
   /* Card Styles */
   .stock-card {
-    @apply bg-stock-board border-2 border-stock-navy p-6 rounded-lg
-           transition-all duration-300 hover:scale-102 hover:shadow-stock-glow;
+    background-color: #001F54;
+    border: 2px solid #000080;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s;
+  }
+
+  .stock-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
   }
 
   /* Ticker Styles */
   .ticker-item {
-    @apply inline-flex items-center gap-2 px-4 font-mono text-sm;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.875rem;
   }
 
   .ticker-positive {
-    @apply text-stock-green;
+    color: #00FF00;
   }
 
   .ticker-negative {
-    @apply text-stock-red;
+    color: #FF0000;
   }
 
   /* Loading Animation */
@@ -203,11 +268,17 @@
 @layer utilities {
   /* Text gradient utilities */
   .text-gradient-gold {
-    @apply bg-gradient-to-r from-yellow-400 to-stock-gold bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #facc15, #FFD700);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
 
   .text-gradient-cyan {
-    @apply bg-gradient-to-r from-cyan-400 to-stock-cyan bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #22d3ee, #00FFFF);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
 
   /* Animation utilities */
@@ -226,11 +297,21 @@
 
   /* Hover effects */
   .hover-lift {
-    @apply transition-transform duration-200 hover:-translate-y-1;
+    transition-property: transform;
+    transition-duration: 200ms;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-0.25rem);
   }
 
   .hover-glow {
-    @apply transition-shadow duration-300 hover:shadow-stock-glow;
+    transition-property: box-shadow;
+    transition-duration: 300ms;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
   }
 }
 
@@ -254,7 +335,8 @@
 /* Print styles */
 @media print {
   body {
-    @apply bg-white text-black;
+    background-color: white;
+    color: black;
   }
 
   .no-print {

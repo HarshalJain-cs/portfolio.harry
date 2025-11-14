@@ -190,7 +190,7 @@ export default function TechAssetsPage() {
 
                     {/* Description */}
                     <p className="text-sm text-stock-text/70 mb-4 line-clamp-3">
-                      {project.short_description}
+                      {project.tagline}
                     </p>
 
                     {/* Metrics */}

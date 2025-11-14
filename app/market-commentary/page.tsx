@@ -94,11 +94,9 @@ export default function MarketCommentaryPage() {
                   <span className="px-3 py-1 bg-stock-gold/20 text-stock-gold text-xs font-mono rounded uppercase border border-stock-gold/50">
                     {blogPosts[0].category}
                   </span>
-                  {blogPosts[0].featured && (
-                    <span className="px-3 py-1 bg-stock-cyan/20 text-stock-cyan text-xs font-mono rounded uppercase border border-stock-cyan/50">
-                      ⭐ FEATURED
-                    </span>
-                  )}
+                  <span className="px-3 py-1 bg-stock-cyan/20 text-stock-cyan text-xs font-mono rounded uppercase border border-stock-cyan/50">
+                    ⭐ FEATURED
+                  </span>
                 </div>
 
                 <h3 className="text-3xl md:text-4xl font-heading text-stock-gold mb-4">
@@ -112,7 +110,7 @@ export default function MarketCommentaryPage() {
                 <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-stock-text/60">
                   <div className="flex items-center gap-2">
                     <FiCalendar size={14} className="text-stock-cyan" />
-                    {new Date(blogPosts[0].published_date).toLocaleDateString('en-US', {
+                    {new Date(blogPosts[0].published_date || new Date().toISOString()).toLocaleDateString('en-US', {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric',
@@ -124,7 +122,7 @@ export default function MarketCommentaryPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <FiBookOpen size={14} className="text-stock-gold" />
-                    {blogPosts[0].views?.toLocaleString() || 0} views
+                    {blogPosts[0].views_count?.toLocaleString() || 0} views
                   </div>
                 </div>
 
@@ -188,7 +186,7 @@ export default function MarketCommentaryPage() {
                   <div className="flex flex-wrap items-center gap-4 mb-4 text-xs text-stock-text/60">
                     <div className="flex items-center gap-2">
                       <FiCalendar size={12} className="text-stock-cyan" />
-                      {new Date(post.published_date).toLocaleDateString('en-US', {
+                      {new Date(post.published_date || new Date().toISOString()).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',
@@ -200,7 +198,7 @@ export default function MarketCommentaryPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <FiBookOpen size={12} className="text-stock-gold" />
-                      {post.views?.toLocaleString() || 0} views
+                      {post.views_count?.toLocaleString() || 0} views
                     </div>
                   </div>
 

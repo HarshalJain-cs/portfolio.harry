@@ -33,14 +33,14 @@ export default function HoldingsPage() {
       count: categorySkills.length,
       percentage: Math.round((categorySkills.length / total) * 100),
       avgRating:
-        categorySkills.reduce((sum, s) => sum + s.rating, 0) /
+        categorySkills.reduce((sum, s) => sum + ((s.proficiency || 0) || 0), 0) /
         categorySkills.length,
     }))
   }, [skillsByCategory])
 
   // Get top skills overall
   const topSkills = useMemo(() => {
-    return [...skills].sort((a, b) => b.rating - a.rating).slice(0, 10)
+    return [...skills].sort((a, b) => (b.proficiency || 0) - (a.proficiency || 0)).slice(0, 10)
   }, [])
 
   // Category colors
@@ -140,7 +140,7 @@ export default function HoldingsPage() {
                   <div className="text-3xl font-heading text-stock-gold/40 w-12 text-center">
                     #{index + 1}
                   </div>
-                  <div className="text-3xl">{skill.icon}</div>
+                  <div className="text-3xl">{skill.icon_name}</div>
                   <div className="flex-1">
                     <div className="font-heading text-stock-cyan text-lg">
                       {skill.name}
@@ -154,7 +154,7 @@ export default function HoldingsPage() {
                       <div
                         key={i}
                         className={`w-2.5 h-2.5 rounded-full ${
-                          i < skill.rating ? 'bg-stock-green' : 'bg-stock-navy'
+                          i < (skill.proficiency || 0) ? 'bg-stock-green' : 'bg-stock-navy'
                         }`}
                       />
                     ))}
@@ -186,7 +186,7 @@ export default function HoldingsPage() {
                         <div className="text-sm text-stock-text/60 font-mono mt-1">
                           {categorySkills.length} holdings •{' '}
                           {Math.round(
-                            (categorySkills.reduce((sum, s) => sum + s.rating, 0) /
+                            (categorySkills.reduce((sum, s) => sum + (s.proficiency || 0), 0) /
                               categorySkills.length /
                               5) *
                               100
@@ -198,14 +198,14 @@ export default function HoldingsPage() {
                       {/* Skills List */}
                       <div className="space-y-3">
                         {categorySkills
-                          .sort((a, b) => b.rating - a.rating)
+                          .sort((a, b) => (b.proficiency || 0) - (a.proficiency || 0))
                           .map(skill => (
                             <div
                               key={skill.name}
                               className="flex items-center justify-between group hover:bg-stock-navy/30 -mx-2 px-2 py-1 rounded transition-colors"
                             >
                               <div className="flex items-center gap-2 flex-1">
-                                <span className="text-lg">{skill.icon}</span>
+                                <span className="text-lg">{skill.icon_name}</span>
                                 <span className="text-sm text-stock-text/80 group-hover:text-stock-cyan transition-colors">
                                   {skill.name}
                                 </span>
@@ -215,7 +215,7 @@ export default function HoldingsPage() {
                                   <div
                                     key={i}
                                     className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                                      i < skill.rating
+                                      i < (skill.proficiency || 0)
                                         ? 'bg-stock-green'
                                         : 'bg-stock-navy'
                                     }`}

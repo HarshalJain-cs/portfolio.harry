@@ -245,7 +245,7 @@ export default function ProspectusPage() {
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="p-6 bg-stock-dark/50 border-l-4 border-stock-cyan">
                   <h3 className="text-xl font-heading text-stock-cyan mb-3">
-                    Build > Talk
+                    Build {'>'}Talk
                   </h3>
                   <p className="text-sm text-stock-text/70">
                     Actions speak louder than words. I focus on shipping products,
@@ -306,7 +306,7 @@ export default function ProspectusPage() {
                             <div
                               key={i}
                               className={`w-1.5 h-1.5 rounded-full ${
-                                i < skill.rating
+                                i < (skill.proficiency || 0)
                                   ? 'bg-stock-green'
                                   : 'bg-stock-navy'
                               }`}

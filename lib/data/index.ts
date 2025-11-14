@@ -18,6 +18,22 @@ export const PLACEHOLDER_DATA = {
   ...MOCK_FINAL_DATA,
 }
 
+// Export individual data arrays with simplified names for easy imports
+export const {
+  projects,
+  skills,
+  experiences,
+  volunteering,
+  certifications,
+  competitions,
+  research: researchPapers,
+  financial_analyses: financialAnalyses,
+  blog_posts: blogPosts,
+  testimonials,
+  coursework,
+  timeline,
+} = PLACEHOLDER_DATA
+
 // Summary of placeholder content
 export const PLACEHOLDER_SUMMARY = {
   projects: 15, // 3 college, 3 personal, 3 hackathon, 3 learning, 3 finance

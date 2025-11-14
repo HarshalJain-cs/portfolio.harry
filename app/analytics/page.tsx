@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import StockTicker from '@/components/layout/StockTicker'
@@ -78,7 +78,7 @@ export default function AnalyticsPage() {
                   <div className="text-center p-6 bg-stock-dark/50 border-2 border-stock-cyan">
                     <FiFolder className="text-4xl text-stock-cyan mx-auto mb-3" />
                     <div className="text-4xl font-heading text-stock-cyan mb-2 font-black">
-                      {stats.publicRepos}
+                      {stats.public_repos}
                     </div>
                     <div className="text-xs text-stock-text/60 uppercase">
                       Public Repos
@@ -88,7 +88,7 @@ export default function AnalyticsPage() {
                   <div className="text-center p-6 bg-stock-dark/50 border-2 border-stock-gold">
                     <FiStar className="text-4xl text-stock-gold mx-auto mb-3" />
                     <div className="text-4xl font-heading text-stock-gold mb-2 font-black">
-                      {stats.totalStars}
+                      {stats.total_stars}
                     </div>
                     <div className="text-xs text-stock-text/60 uppercase">
                       Total Stars
@@ -98,7 +98,7 @@ export default function AnalyticsPage() {
                   <div className="text-center p-6 bg-stock-dark/50 border-2 border-stock-green">
                     <FiGitCommit className="text-4xl text-stock-green mx-auto mb-3" />
                     <div className="text-4xl font-heading text-stock-green mb-2 font-black">
-                      {stats.totalCommits.toLocaleString()}
+                      {stats.total_commits.toLocaleString()}
                     </div>
                     <div className="text-xs text-stock-text/60 uppercase">
                       Commits
@@ -129,7 +129,7 @@ export default function AnalyticsPage() {
                 <div className="grid md:grid-cols-2 gap-8">
                   {/* Languages List */}
                   <div className="space-y-4">
-                    {stats.topLanguages.map((lang, index) => (
+                    {stats.most_used_languages.map((lang, index) => (
                       <div key={index} className="stock-card">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-3">
@@ -138,7 +138,7 @@ export default function AnalyticsPage() {
                               style={{ backgroundColor: lang.color }}
                             ></div>
                             <span className="font-heading text-stock-cyan">
-                              {lang.name}
+                              {lang.language}
                             </span>
                           </div>
                           <span className="font-mono text-stock-gold font-bold">
@@ -162,8 +162,8 @@ export default function AnalyticsPage() {
                   <div className="stock-card flex items-center justify-center">
                     <div className="relative w-64 h-64">
                       <svg viewBox="0 0 100 100" className="transform -rotate-90">
-                        {stats.topLanguages.reduce((acc, lang, index) => {
-                          const prevPercentage = stats.topLanguages
+                        {stats.most_used_languages.reduce((acc, lang, index) => {
+                          const prevPercentage = stats.most_used_languages
                             .slice(0, index)
                             .reduce((sum, l) => sum + l.percentage, 0)
                           const strokeDasharray = `${lang.percentage} ${100 - lang.percentage}`
@@ -184,11 +184,11 @@ export default function AnalyticsPage() {
                             />
                           )
                           return acc
-                        }, [] as JSX.Element[])}
+                        }, [] as React.ReactElement[])}
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <div className="text-3xl font-heading text-stock-cyan font-black">
-                          {stats.topLanguages.length}
+                          {stats.most_used_languages.length}
                         </div>
                         <div className="text-xs text-stock-text/60 uppercase">
                           Languages
@@ -212,7 +212,7 @@ export default function AnalyticsPage() {
                     <div className="p-6 stock-card text-center">
                       <div className="text-4xl mb-4">⏱️</div>
                       <div className="text-2xl font-heading text-stock-cyan mb-2 font-black">
-                        {stats.accountAge} yrs
+                        {(stats.account_age_days / 365).toFixed(1)} yrs
                       </div>
                       <div className="text-sm text-stock-text/60">
                         Account Age
@@ -222,7 +222,7 @@ export default function AnalyticsPage() {
                     <div className="p-6 stock-card text-center">
                       <div className="text-4xl mb-4">📊</div>
                       <div className="text-2xl font-heading text-stock-green mb-2 font-black">
-                        {(stats.totalCommits / stats.accountAge / 365).toFixed(0)}
+                        {(stats.total_commits / stats.account_age_days).toFixed(1)}
                       </div>
                       <div className="text-sm text-stock-text/60">
                         Commits / Day Avg
@@ -232,7 +232,7 @@ export default function AnalyticsPage() {
                     <div className="p-6 stock-card text-center">
                       <div className="text-4xl mb-4">🎯</div>
                       <div className="text-2xl font-heading text-stock-gold mb-2 font-black">
-                        {(stats.totalStars / stats.publicRepos).toFixed(1)}
+                        {(stats.total_stars / stats.public_repos).toFixed(1)}
                       </div>
                       <div className="text-sm text-stock-text/60">
                         Stars / Repo Avg

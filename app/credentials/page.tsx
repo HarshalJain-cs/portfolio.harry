@@ -16,7 +16,11 @@ export default function CredentialsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
   // Get unique categories
-  const categories = ['all', ...new Set(certifications.map(c => c.category))]
+  const uniqueCategories = new Set<string>()
+  certifications.forEach(c => {
+    if (c.category) uniqueCategories.add(c.category)
+  })
+  const categories: string[] = ['all', ...Array.from(uniqueCategories)]
 
   // Filter certifications
   const filteredCerts = certifications.filter(
@@ -142,13 +146,13 @@ export default function CredentialsPage() {
                   <div className="flex-1">
                     <div
                       className={`text-xs font-mono uppercase mb-2 text-${getCategoryColor(
-                        cert.category
+                        cert.category || ''
                       )}`}
                     >
                       {cert.category}
                     </div>
                     <h3 className="text-lg font-heading text-stock-cyan group-hover:text-stock-gold transition-colors">
-                      {cert.name}
+                      {cert.title}
                     </h3>
                   </div>
                   <FiCheckCircle className="text-stock-green text-2xl flex-shrink-0 ml-2" />
@@ -159,10 +163,12 @@ export default function CredentialsPage() {
                   <div className="text-sm font-bold text-stock-text/90 mb-1">
                     {cert.issuing_organization}
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-stock-text/60">
-                    <FiCalendar size={12} />
-                    <span>Issued {new Date(cert.issue_date).toLocaleDateString()}</span>
-                  </div>
+                  {cert.issue_date && (
+                    <div className="flex items-center gap-2 text-xs text-stock-text/60">
+                      <FiCalendar size={12} />
+                      <span>Issued {new Date(cert.issue_date).toLocaleDateString()}</span>
+                    </div>
+                  )}
                   {cert.expiry_date && (
                     <div className="text-xs text-stock-text/40 mt-1">
                       Expires {new Date(cert.expiry_date).toLocaleDateString()}
@@ -171,13 +177,13 @@ export default function CredentialsPage() {
                 </div>
 
                 {/* Skills */}
-                {cert.skills_covered && cert.skills_covered.length > 0 && (
+                {cert.skills_gained && cert.skills_gained.length > 0 && (
                   <div className="mb-4">
                     <div className="text-xs text-stock-text/40 mb-2 uppercase">
                       Skills Covered
                     </div>
                     <div className="flex flex-wrap gap-1.5">
-                      {cert.skills_covered.slice(0, 4).map(skill => (
+                      {cert.skills_gained.slice(0, 4).map(skill => (
                         <span
                           key={skill}
                           className="px-2 py-1 bg-stock-navy/50 text-stock-text/60 text-xs rounded font-mono"
@@ -185,9 +191,9 @@ export default function CredentialsPage() {
                           {skill}
                         </span>
                       ))}
-                      {cert.skills_covered.length > 4 && (
+                      {cert.skills_gained.length > 4 && (
                         <span className="px-2 py-1 text-stock-cyan text-xs font-mono">
-                          +{cert.skills_covered.length - 4}
+                          +{cert.skills_gained.length - 4}
                         </span>
                       )}
                     </div>
@@ -206,9 +212,9 @@ export default function CredentialsPage() {
 
                 {/* Actions */}
                 <div className="flex gap-2">
-                  {cert.verification_url && (
+                  {cert.credential_url && (
                     <a
-                      href={cert.verification_url}
+                      href={cert.credential_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 px-3 py-2 bg-stock-navy/50 hover:bg-stock-navy text-stock-cyan text-sm rounded transition-colors flex items-center justify-center gap-2 font-mono"
@@ -217,9 +223,9 @@ export default function CredentialsPage() {
                       Verify
                     </a>
                   )}
-                  {cert.certificate_url && (
+                  {cert.certificate_file_url && (
                     <a
-                      href={cert.certificate_url}
+                      href={cert.certificate_file_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 px-3 py-2 bg-stock-gold/20 hover:bg-stock-gold/30 text-stock-gold text-sm rounded transition-colors flex items-center justify-center gap-2 font-mono"
