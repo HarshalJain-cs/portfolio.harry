@@ -14,7 +14,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Logo from '@/components/ui/Logo'
 import Button from '@/components/ui/Button'
-import { FiMenu, FiX, FiSettings, FiSearch, FiDownload } from 'react-icons/fi'
+import SettingsMenu from '@/components/ui/SettingsMenu'
+import { FiMenu, FiX, FiSearch, FiDownload } from 'react-icons/fi'
 import { mobileMenuSlide } from '@/lib/animations'
 
 const menuItems = [
@@ -136,9 +137,7 @@ export default function Navigation() {
               <button className="p-2 text-platinum-main hover:text-gold-bright transition-colors">
                 <FiSearch size={20} />
               </button>
-              <button className="p-2 text-platinum-main hover:text-gold-bright transition-colors">
-                <FiSettings size={20} />
-              </button>
+              <SettingsMenu />
               <Button variant="gold" size="sm">
                 <FiDownload size={16} className="mr-2" />
                 Resume
