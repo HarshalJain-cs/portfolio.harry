@@ -12,14 +12,24 @@ import Button from '@/components/ui/Button'
 import GlassCard from '@/components/ui/GlassCard'
 import Badge from '@/components/ui/Badge'
 import MetricCard from '@/components/ui/MetricCard'
+import Navigation from '@/components/layout/Navigation'
+import Footer from '@/components/layout/Footer'
+import ProgressBar from '@/components/layout/ProgressBar'
+import CustomCursor from '@/components/layout/CustomCursor'
 import { FiDollarSign, FiCode, FiTrendingUp, FiAward, FiGithub, FiBriefcase } from 'react-icons/fi'
 import { fadeIn, scrollReveal, staggerContainer, staggerItem } from '@/lib/animations'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-bg-primary text-platinum-main">
+    <>
+      {/* Layout Components */}
+      <CustomCursor />
+      <ProgressBar />
+      <Navigation />
+
+      <div className="min-h-screen bg-bg-primary text-platinum-main">
       {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-bg-primary via-bg-secondary to-bg-elevated opacity-90" />
 
@@ -358,24 +368,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SIMPLE FOOTER */}
-      <footer className="bg-bg-elevated border-t border-glass-platinum py-12">
-        <div className="container-custom text-center space-y-6">
-          <Logo size="md" />
-          <p className="text-platinum-muted">
-            Tech Entrepreneur & Trader | Building at the intersection of Technology & Financial Markets
-          </p>
-          <div className="flex items-center justify-center space-x-6">
-            <a href="https://github.com/HarshalJain-cs" className="text-platinum-muted hover:text-gold-bright transition-colors">
-              <FiGithub size={24} />
-            </a>
-            {/* Add more social links */}
-          </div>
-          <div className="text-sm text-platinum-dark pt-6 border-t border-glass-platinum">
-            © 2025 Harshal Jain. All rights reserved. | Built with ❤️ and ☕
-          </div>
-        </div>
-      </footer>
     </div>
+
+      {/* Footer */}
+      <Footer />
+    </>
   )
 }

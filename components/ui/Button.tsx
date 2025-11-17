@@ -46,10 +46,9 @@ const buttonVariants = {
     y: -4,
     filter: 'brightness(1.1)',
     transition: {
-      type: 'spring',
+      type: 'spring' as const,
       stiffness: 400,
       damping: 10,
-      duration: 0.2,
     },
   },
   tap: {

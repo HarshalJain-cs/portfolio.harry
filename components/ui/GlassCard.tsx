@@ -46,7 +46,7 @@ const hoverVariants = {
     y: -8,
     transition: {
       duration: 0.3,
-      ease: 'easeOut',
+      ease: 'easeOut' as const,
     },
   },
 }
@@ -67,19 +67,26 @@ export default function GlassCard({
     ? 'hover:bg-[rgba(255,255,255,0.17)] hover:backdrop-blur-[20px]'
     : ''
 
-  const Component = hover || variant === 'interactive' ? motion.div : 'div'
+  const shouldAnimate = hover || variant === 'interactive'
 
-  const content = (
-    <Component
+  const content = shouldAnimate ? (
+    <motion.div
       className={`${baseClasses} ${variantClasses} ${hoverClasses} ${className}`}
       onClick={onClick}
-      variants={hover || variant === 'interactive' ? hoverVariants : undefined}
+      variants={hoverVariants}
       initial="rest"
       whileHover="hover"
-      {...(hover || variant === 'interactive' ? motionProps : {})}
+      {...motionProps}
     >
       {children}
-    </Component>
+    </motion.div>
+  ) : (
+    <div
+      className={`${baseClasses} ${variantClasses} ${hoverClasses} ${className}`}
+      onClick={onClick}
+    >
+      {children}
+    </div>
   )
 
   return content
