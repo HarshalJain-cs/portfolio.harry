@@ -6,6 +6,7 @@
  * NEW DESIGN: Warmer Charcoal + Gold + Emerald + Platinum
  */
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Logo from '@/components/ui/Logo'
 import Button from '@/components/ui/Button'
@@ -16,12 +17,20 @@ import Navigation from '@/components/layout/Navigation'
 import Footer from '@/components/layout/Footer'
 import ProgressBar from '@/components/layout/ProgressBar'
 import CustomCursor from '@/components/layout/CustomCursor'
+import LoadingScreen from '@/components/layout/LoadingScreen'
+import VideoBackground from '@/components/layout/VideoBackground'
+import FloatingCards from '@/components/hero/FloatingCards'
 import { FiDollarSign, FiCode, FiTrendingUp, FiAward, FiGithub, FiBriefcase } from 'react-icons/fi'
 import { fadeIn, scrollReveal, staggerContainer, staggerItem } from '@/lib/animations'
 
 export default function HomePage() {
+  const [showLoading, setShowLoading] = useState(true)
+
   return (
     <>
+      {/* Loading Screen */}
+      {showLoading && <LoadingScreen onComplete={() => setShowLoading(false)} />}
+
       {/* Layout Components */}
       <CustomCursor />
       <ProgressBar />
@@ -30,8 +39,8 @@ export default function HomePage() {
       <div className="min-h-screen bg-bg-primary text-platinum-main">
       {/* HERO SECTION */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-bg-primary via-bg-secondary to-bg-elevated opacity-90" />
+        {/* Video Background (hidden on mobile, falls back to gradient) */}
+        <VideoBackground />
 
         {/* Animated grid background */}
         <div className="absolute inset-0 opacity-10">
@@ -40,6 +49,9 @@ export default function HomePage() {
             backgroundSize: '50px 50px',
           }} />
         </div>
+
+        {/* Floating Cards (hidden on mobile) */}
+        <FloatingCards />
 
         {/* Content */}
         <motion.div
