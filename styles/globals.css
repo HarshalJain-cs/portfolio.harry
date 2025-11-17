@@ -1,338 +1,287 @@
 /**
  * Global Styles for Harshal Jain Portfolio
- * Stock Exchange Themed Design
+ * Luxury Finance Theme: Warmer Charcoal + Gold + Emerald + Platinum
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700;900&family=Roboto+Mono:wght@300;400;500;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+/* IMPORT FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* Dark Mode (Default) */
-  :root,
-  .dark {
-    --stock-navy: 0 0 128; /* #000080 */
-    --stock-green: 0 255 0; /* #00FF00 */
-    --stock-red: 255 0 0; /* #FF0000 */
-    --stock-gold: 255 215 0; /* #FFD700 */
-    --stock-cyan: 0 255 255; /* #00FFFF */
-    --stock-dark: 10 14 39; /* #0a0e27 */
-    --stock-board: 0 31 84; /* #001F54 */
-    --stock-text: 224 224 224; /* #E0E0E0 */
-    --bg-primary: 10 14 39; /* Dark background */
-    --bg-secondary: 0 31 84; /* Stock board background */
-    --text-primary: 224 224 224; /* Light text */
-    --text-secondary: 160 160 160; /* Dimmed text */
-  }
+  /* ROOT VARIABLES */
+  :root {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #252541;
+    --bg-elevated: #2d3748;
+    --bg-board: #16213e;
 
-  /* Light Mode */
-  .light {
-    --stock-navy: 0 0 128; /* #000080 */
-    --stock-green: 0 128 0; /* Darker green for light mode */
-    --stock-red: 200 0 0; /* Slightly darker red */
-    --stock-gold: 184 134 11; /* Darker gold */
-    --stock-cyan: 0 139 139; /* Darker cyan */
-    --stock-dark: 240 240 245; /* Light gray background */
-    --stock-board: 255 255 255; /* White board background */
-    --stock-text: 30 30 30; /* Dark text */
-    --bg-primary: 248 250 252; /* Light background */
-    --bg-secondary: 255 255 255; /* White background */
-    --text-primary: 30 30 30; /* Dark text */
-    --text-secondary: 100 100 100; /* Gray text */
+    --gold-main: #c9a961;
+    --gold-bright: #d4af37;
+
+    --emerald-main: #10b981;
+
+    --platinum-bright: #f1f5f9;
+    --platinum-main: #e2e8f0;
   }
 
   * {
-    border-color: rgb(var(--stock-navy) / 0.2);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
   html {
     @apply scroll-smooth;
+    font-size: 16px;
   }
 
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: rgb(var(--bg-primary));
-    color: rgb(var(--text-primary));
-    background-image: linear-gradient(
-        to right,
-        rgba(128, 128, 128, 0.1) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        rgba(128, 128, 128, 0.1) 1px,
-        transparent 1px
-      );
-    background-size: 20px 20px;
+    background-color: var(--bg-primary);
+    color: var(--platinum-main);
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 700;
+  /* TYPOGRAPHY */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', 'Space Grotesk', sans-serif;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--platinum-bright);
   }
 
-  h1 {
-    font-size: 2.25rem;
+  p {
+    line-height: 1.75;
   }
 
-  @media (min-width: 768px) {
-    h1 {
-      font-size: 3rem;
-    }
+  code, .mono {
+    font-family: 'JetBrains Mono', monospace;
   }
 
-  @media (min-width: 1024px) {
-    h1 {
-      font-size: 3.75rem;
-    }
+  /* FOCUS STYLES (Emerald for accessibility) */
+  :focus-visible {
+    outline: 2px solid var(--emerald-main);
+    outline-offset: 4px;
   }
 
-  h2 {
-    font-size: 1.875rem;
+  /* SELECTION */
+  ::selection {
+    background-color: var(--gold-main);
+    color: var(--bg-primary);
   }
 
-  @media (min-width: 768px) {
-    h2 {
-      font-size: 2.25rem;
-    }
-  }
-
-  h3 {
-    font-size: 1.5rem;
-  }
-
-  @media (min-width: 768px) {
-    h3 {
-      font-size: 1.875rem;
-    }
-  }
-
-  /* Code and numbers */
-  code,
-  .ticker-number,
-  .stock-price {
-    font-family: 'Roboto Mono', monospace;
+  ::-moz-selection {
+    background-color: var(--gold-main);
+    color: var(--bg-primary);
   }
 }
 
 @layer components {
-  /* Stock Exchange Border Style */
-  .stock-border {
-    border: 2px solid #000080;
-    box-shadow: 0 0 10px rgba(0, 0, 128, 0.3);
+  /* GLASS MORPHISM COMPONENTS */
+  .glass-subtle {
+    background-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
-  .stock-border-top {
-    border-top: 3px double currentColor;
+  .glass-light {
+    background-color: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
-  .stock-border-bottom {
-    border-bottom: 3px double currentColor;
+  .glass-medium {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
-  /* Button Styles */
-  .btn-primary {
-    background-color: #000080;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.25rem;
-    font-weight: 700;
-    transition: all 0.2s;
+  .glass-heavy {
+    background-color: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
-  .btn-primary:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  /* GLASS CARD VARIANTS */
+  .glass-card {
+    @apply glass-medium rounded-lg p-6;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .btn-success {
-    background-color: #00FF00;
-    color: black;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.25rem;
-    font-weight: 700;
-    transition: all 0.2s;
+  .glass-card-luxury {
+    @apply glass-medium rounded-lg p-6;
+    border: 1px solid rgba(201, 169, 97, 0.18);
+    box-shadow: 0 0 20px rgba(201, 169, 97, 0.4);
   }
 
-  .btn-success:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
+  .glass-card-success {
+    @apply glass-medium rounded-lg p-6;
+    border: 1px solid rgba(16, 185, 129, 0.18);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
   }
 
-  .btn-danger {
-    background-color: #FF0000;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.25rem;
-    font-weight: 700;
-    transition: all 0.2s;
+  /* BUTTON STYLES */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold;
+    @apply transition-all duration-300 cubic-bezier(0.4, 0, 0.2, 1);
+    @apply focus-visible:outline-emerald-main;
   }
 
-  .btn-danger:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
+  .btn-gold {
+    @apply glass-medium border border-glass-gold text-platinum-bright;
   }
 
-  /* Card Styles */
-  .stock-card {
-    background-color: #001F54;
-    border: 2px solid #000080;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    transition: all 0.3s;
+  .btn-gold:hover {
+    @apply shadow-gold-hover;
+    transform: translateY(-4px) scale(1.08);
+    filter: brightness(1.1);
   }
 
-  .stock-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  .btn-platinum {
+    @apply glass-medium border border-glass-platinum text-platinum-bright;
   }
 
-  /* Ticker Styles */
-  .ticker-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0 1rem;
-    font-family: 'Roboto Mono', monospace;
-    font-size: 0.875rem;
+  .btn-platinum:hover {
+    @apply shadow-platinum;
+    transform: translateY(-4px) scale(1.08);
   }
 
-  .ticker-positive {
-    color: #00FF00;
+  .btn-emerald {
+    @apply glass-medium border border-emerald-main text-emerald-bright;
   }
 
-  .ticker-negative {
-    color: #FF0000;
+  .btn-emerald:hover {
+    @apply shadow-emerald;
+    transform: translateY(-4px) scale(1.08);
   }
 
-  /* Loading Animation */
-  .loading-dots::after {
+  /* CONTAINER */
+  .container-custom {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 1440px;
+  }
+
+  /* SECTION SPACING */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  /* GOLD UNDERLINE (for section headings) */
+  .gold-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .gold-underline::after {
     content: '';
-    animation: dots 1.5s steps(4, end) infinite;
-  }
-
-  @keyframes dots {
-    0%,
-    20% {
-      content: '';
-    }
-    40% {
-      content: '.';
-    }
-    60% {
-      content: '..';
-    }
-    80%,
-    100% {
-      content: '...';
-    }
-  }
-
-  /* Glassmorphism Effect */
-  .glass {
-    background: rgba(0, 0, 128, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Scrollbar Styling */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgb(var(--stock-navy));
-    border-radius: 5px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgb(var(--stock-cyan));
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-main), var(--gold-bright));
+    box-shadow: 0 0 10px var(--gold-main);
   }
 }
 
 @layer utilities {
-  /* Text gradient utilities */
-  .text-gradient-gold {
-    background-image: linear-gradient(to right, #facc15, #FFD700);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+  /* HIDE SCROLLBAR */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  .text-gradient-cyan {
-    background-image: linear-gradient(to right, #22d3ee, #00FFFF);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
-  /* Animation utilities */
-  .animate-ticker {
-    animation: ticker-scroll 30s linear infinite;
+  /* CUSTOM CURSOR (hide default) */
+  .custom-cursor {
+    cursor: none;
   }
 
-  @keyframes ticker-scroll {
-    0% {
-      transform: translateX(0);
+  .custom-cursor a,
+  .custom-cursor button {
+    cursor: none;
+  }
+
+  /* PERSPECTIVE (for 3D cards) */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  /* PRESERVE 3D */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* TEXT SHADOW GOLD */
+  .text-shadow-gold {
+    text-shadow: 0 0 20px rgba(201, 169, 97, 0.6);
+  }
+
+  /* TEXT SHADOW EMERALD */
+  .text-shadow-emerald {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+  }
+
+  /* REDUCED MOTION */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  /* Hover effects */
-  .hover-lift {
-    transition-property: transform;
-    transition-duration: 200ms;
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-0.25rem);
-  }
-
-  .hover-glow {
-    transition-property: box-shadow;
-    transition-duration: 300ms;
-  }
-
-  .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
   }
 }
 
-/* Custom selection color */
-::selection {
-  background-color: rgb(var(--stock-cyan));
-  color: rgb(var(--stock-dark));
+/* SCROLLBAR STYLING */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
 }
 
-::-moz-selection {
-  background-color: rgb(var(--stock-cyan));
-  color: rgb(var(--stock-dark));
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
 }
 
-/* Focus visible styles */
-:focus-visible {
-  outline: 2px solid rgb(var(--stock-cyan));
-  outline-offset: 2px;
+::-webkit-scrollbar-thumb {
+  background: var(--gold-main);
+  border-radius: 6px;
+  border: 2px solid var(--bg-secondary);
 }
 
-/* Print styles */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-bright);
+}
+
+/* LOADING SPINNER (if needed) */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--gold-main);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.8s linear infinite;
+}
+
+/* PRINT STYLES */
 @media print {
   body {
     background-color: white;
