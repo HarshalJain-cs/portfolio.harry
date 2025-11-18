@@ -85,30 +85,32 @@ export default function SettingsMenu() {
                 </div>
 
                 {/* Sound Toggle */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    {soundEnabled ? (
-                      <FiVolume2 className="text-gold-bright" size={20} />
-                    ) : (
-                      <FiVolumeX className="text-platinum-muted" size={20} />
-                    )}
-                    <div>
-                      <div className="text-platinum-main text-sm font-medium">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 ${soundEnabled ? 'bg-gold-main/10' : 'bg-platinum-dark/20'}`}>
+                      {soundEnabled ? (
+                        <FiVolume2 className="text-gold-bright" size={16} />
+                      ) : (
+                        <FiVolumeX className="text-platinum-muted" size={16} />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-platinum-main text-sm font-medium leading-tight">
                         Sound Effects
                       </div>
-                      <div className="text-platinum-dark text-xs">
+                      <div className="text-platinum-dark text-xs mt-0.5">
                         {soundEnabled ? 'Enabled' : 'Disabled'}
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={handleToggleSound}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-all flex-shrink-0 ${
                       soundEnabled ? 'bg-gold-main' : 'bg-platinum-dark'
                     }`}
                   >
                     <motion.span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform ${
                         soundEnabled ? 'translate-x-6' : 'translate-x-1'
                       }`}
                       layout
@@ -117,30 +119,32 @@ export default function SettingsMenu() {
                 </div>
 
                 {/* Animations Toggle */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    {animationLevel !== 'none' ? (
-                      <FiZap className="text-emerald-bright" size={20} />
-                    ) : (
-                      <FiZapOff className="text-platinum-muted" size={20} />
-                    )}
-                    <div>
-                      <div className="text-platinum-main text-sm font-medium">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 ${animationLevel !== 'none' ? 'bg-emerald-main/10' : 'bg-platinum-dark/20'}`}>
+                      {animationLevel !== 'none' ? (
+                        <FiZap className="text-emerald-bright" size={16} />
+                      ) : (
+                        <FiZapOff className="text-platinum-muted" size={16} />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-platinum-main text-sm font-medium leading-tight">
                         Animations
                       </div>
-                      <div className="text-platinum-dark text-xs">
+                      <div className="text-platinum-dark text-xs mt-0.5">
                         {animationLevel !== 'none' ? 'Enabled' : 'Reduced'}
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={handleToggleAnimations}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-all flex-shrink-0 ${
                       animationLevel !== 'none' ? 'bg-emerald-main' : 'bg-platinum-dark'
                     }`}
                   >
                     <motion.span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform ${
                         animationLevel !== 'none' ? 'translate-x-6' : 'translate-x-1'
                       }`}
                       layout
@@ -149,30 +153,32 @@ export default function SettingsMenu() {
                 </div>
 
                 {/* Theme Toggle */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    {theme === 'dark' ? (
-                      <FiMoon className="text-platinum-bright" size={20} />
-                    ) : (
-                      <FiSun className="text-gold-bright" size={20} />
-                    )}
-                    <div>
-                      <div className="text-platinum-main text-sm font-medium">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 ${theme === 'dark' ? 'bg-platinum-main/10' : 'bg-gold-main/10'}`}>
+                      {theme === 'dark' ? (
+                        <FiMoon className="text-platinum-bright" size={16} />
+                      ) : (
+                        <FiSun className="text-gold-bright" size={16} />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-platinum-main text-sm font-medium leading-tight">
                         Theme
                       </div>
-                      <div className="text-platinum-dark text-xs">
+                      <div className="text-platinum-dark text-xs mt-0.5">
                         {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={handleToggleTheme}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-all flex-shrink-0 ${
                       theme === 'dark' ? 'bg-platinum-main' : 'bg-gold-main'
                     }`}
                   >
                     <motion.span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform ${
                         theme === 'dark' ? 'translate-x-6' : 'translate-x-1'
                       }`}
                       layout

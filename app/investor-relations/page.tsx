@@ -132,13 +132,15 @@ export default function InvestorRelationsPage() {
 
                   <div className="space-y-4">
                     <GlassCard variant="luxury">
-                      <div className="flex items-start gap-4">
-                        <FiMail className="text-gold-bright text-xl mt-1 flex-shrink-0" />
-                        <div>
-                          <div className="text-sm text-platinum-dark mb-1">Email</div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gold-main/10 flex-shrink-0">
+                          <FiMail className="text-gold-bright text-lg" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs font-mono text-platinum-dark mb-1 uppercase tracking-wider">Email</div>
                           <a
                             href="mailto:harshaljaincs@gmail.com"
-                            className="text-gold-bright hover:text-gold-main transition-colors"
+                            className="text-gold-bright hover:text-gold-main transition-colors text-sm font-medium break-all"
                           >
                             harshaljaincs@gmail.com
                           </a>
@@ -147,21 +149,25 @@ export default function InvestorRelationsPage() {
                     </GlassCard>
 
                     <GlassCard variant="luxury">
-                      <div className="flex items-start gap-4">
-                        <FiMapPin className="text-gold-bright text-xl mt-1 flex-shrink-0" />
-                        <div>
-                          <div className="text-sm text-platinum-dark mb-1">Location</div>
-                          <div className="text-platinum-main">India</div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gold-main/10 flex-shrink-0">
+                          <FiMapPin className="text-gold-bright text-lg" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-xs font-mono text-platinum-dark mb-1 uppercase tracking-wider">Location</div>
+                          <div className="text-platinum-main text-sm font-medium">India</div>
                         </div>
                       </div>
                     </GlassCard>
 
                     <GlassCard variant="luxury">
-                      <div className="flex items-start gap-4">
-                        <FiClock className="text-gold-bright text-xl mt-1 flex-shrink-0" />
-                        <div>
-                          <div className="text-sm text-platinum-dark mb-1">Availability</div>
-                          <div className="text-platinum-main">Mon - Fri, 9AM - 6PM IST</div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gold-main/10 flex-shrink-0">
+                          <FiClock className="text-gold-bright text-lg" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-xs font-mono text-platinum-dark mb-1 uppercase tracking-wider">Availability</div>
+                          <div className="text-platinum-main text-sm font-medium">Mon - Fri, 9AM - 6PM IST</div>
                         </div>
                       </div>
                     </GlassCard>
@@ -180,10 +186,12 @@ export default function InvestorRelationsPage() {
                       rel="noopener noreferrer"
                     >
                       <GlassCard variant="interactive" hover>
-                        <div className="flex items-center gap-3">
-                          <FiGithub className="text-gold-bright text-xl" />
-                          <div>
-                            <div className="text-sm text-platinum-bright">GitHub</div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gold-main/10 flex-shrink-0">
+                            <FiGithub className="text-gold-bright text-lg" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-sm text-platinum-bright font-medium">GitHub</div>
                             <div className="text-xs text-platinum-dark font-mono">
                               @HarshalJain-cs
                             </div>
@@ -198,10 +206,12 @@ export default function InvestorRelationsPage() {
                       rel="noopener noreferrer"
                     >
                       <GlassCard variant="interactive" hover>
-                        <div className="flex items-center gap-3">
-                          <FiLinkedin className="text-gold-bright text-xl" />
-                          <div>
-                            <div className="text-sm text-platinum-bright">LinkedIn</div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gold-main/10 flex-shrink-0">
+                            <FiLinkedin className="text-gold-bright text-lg" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-sm text-platinum-bright font-medium">LinkedIn</div>
                             <div className="text-xs text-platinum-dark font-mono">
                               Connect with me
                             </div>
@@ -214,13 +224,15 @@ export default function InvestorRelationsPage() {
 
                 {/* Response Time */}
                 <GlassCard variant="success" className="border-l-4 border-emerald-main">
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">⚡</span>
-                    <div>
-                      <div className="text-sm font-heading text-emerald-bright mb-2">
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-main/10 flex-shrink-0">
+                      <span className="text-xl">⚡</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-heading text-emerald-bright mb-1 font-semibold">
                         Quick Response Time
                       </div>
-                      <p className="text-xs text-platinum-muted">
+                      <p className="text-xs text-platinum-muted leading-relaxed">
                         I typically respond to inquiries within 24-48 hours during business days.
                       </p>
                     </div>
@@ -241,12 +253,12 @@ export default function InvestorRelationsPage() {
                     Send a Message
                   </h2>
 
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Name */}
-                    <div>
+                    <div className="space-y-2">
                       <label
                         htmlFor="name"
-                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                        className="block text-xs font-mono text-platinum-main uppercase tracking-wider font-medium"
                       >
                         Your Name *
                       </label>
@@ -257,16 +269,16 @@ export default function InvestorRelationsPage() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main transition-colors"
+                        className="w-full px-4 py-3.5 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main focus:ring-2 focus:ring-gold-main/20 transition-all"
                         placeholder="John Doe"
                       />
                     </div>
 
                     {/* Email */}
-                    <div>
+                    <div className="space-y-2">
                       <label
                         htmlFor="email"
-                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                        className="block text-xs font-mono text-platinum-main uppercase tracking-wider font-medium"
                       >
                         Email Address *
                       </label>
@@ -277,16 +289,16 @@ export default function InvestorRelationsPage() {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main transition-colors"
+                        className="w-full px-4 py-3.5 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main focus:ring-2 focus:ring-gold-main/20 transition-all"
                         placeholder="john@example.com"
                       />
                     </div>
 
                     {/* Inquiry Type */}
-                    <div>
+                    <div className="space-y-2">
                       <label
                         htmlFor="inquiry_type"
-                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                        className="block text-xs font-mono text-platinum-main uppercase tracking-wider font-medium"
                       >
                         Inquiry Type *
                       </label>
@@ -296,7 +308,7 @@ export default function InvestorRelationsPage() {
                         required
                         value={formData.inquiry_type}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main focus:outline-none focus:border-gold-main transition-colors appearance-none cursor-pointer"
+                        className="w-full px-4 py-3.5 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main focus:outline-none focus:border-gold-main focus:ring-2 focus:ring-gold-main/20 transition-all appearance-none cursor-pointer"
                       >
                         <option value="general" className="bg-bg-elevated">General Inquiry</option>
                         <option value="collaboration" className="bg-bg-elevated">Collaboration</option>
@@ -307,10 +319,10 @@ export default function InvestorRelationsPage() {
                     </div>
 
                     {/* Subject */}
-                    <div>
+                    <div className="space-y-2">
                       <label
                         htmlFor="subject"
-                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                        className="block text-xs font-mono text-platinum-main uppercase tracking-wider font-medium"
                       >
                         Subject *
                       </label>
@@ -321,16 +333,16 @@ export default function InvestorRelationsPage() {
                         required
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main transition-colors"
+                        className="w-full px-4 py-3.5 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main focus:ring-2 focus:ring-gold-main/20 transition-all"
                         placeholder="Let's work together on..."
                       />
                     </div>
 
                     {/* Message */}
-                    <div>
+                    <div className="space-y-2">
                       <label
                         htmlFor="message"
-                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                        className="block text-xs font-mono text-platinum-main uppercase tracking-wider font-medium"
                       >
                         Message *
                       </label>
@@ -341,7 +353,7 @@ export default function InvestorRelationsPage() {
                         value={formData.message}
                         onChange={handleChange}
                         rows={6}
-                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main transition-colors resize-none"
+                        className="w-full px-4 py-3.5 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main focus:ring-2 focus:ring-gold-main/20 transition-all resize-none leading-relaxed"
                         placeholder="Tell me about your project, opportunity, or idea..."
                       />
                     </div>
