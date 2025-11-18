@@ -4,57 +4,42 @@
  * SETTINGS MENU
  * Dropdown menu for controlling sounds, animations, and theme
  * Accessible from top-right navigation
- * Stores preferences in localStorage
+ * Stores preferences in localStorage via context providers
  */
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiSettings, FiVolume2, FiVolumeX, FiZap, FiZapOff, FiSun, FiMoon } from 'react-icons/fi'
-
-interface Settings {
-  soundEnabled: boolean
-  animationsEnabled: boolean
-  theme: 'dark' | 'light'
-}
+import { useTheme } from '@/contexts/ThemeContext'
+import { useSound } from '@/contexts/SoundContext'
+import { useAnimation } from '@/contexts/AnimationContext'
 
 export default function SettingsMenu() {
   const [isOpen, setIsOpen] = useState(false)
-  const [settings, setSettings] = useState<Settings>({
-    soundEnabled: false, // OFF by default per spec
-    animationsEnabled: true,
-    theme: 'dark',
-  })
 
-  // Load settings from localStorage on mount
-  useEffect(() => {
-    const savedSettings = localStorage.getItem('portfolio-settings')
-    if (savedSettings) {
-      try {
-        setSettings(JSON.parse(savedSettings))
-      } catch (e) {
-        console.error('Failed to parse settings:', e)
+  // Use context hooks for global state management
+  const { theme, setTheme } = useTheme()
+  const { soundEnabled, toggleSound: toggleSoundContext, playClick } = useSound()
+  const { animationLevel, setAnimationLevel } = useAnimation()
+
+  const handleToggleSound = () => {
+    toggleSoundContext()
+    // Play a test sound when enabling (will only play if sound is being enabled)
+    setTimeout(() => {
+      if (!soundEnabled) {
+        playClick()
       }
-    }
-  }, [])
-
-  // Save settings to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('portfolio-settings', JSON.stringify(settings))
-  }, [settings])
-
-  const toggleSound = () => {
-    setSettings(prev => ({ ...prev, soundEnabled: !prev.soundEnabled }))
+    }, 50)
   }
 
-  const toggleAnimations = () => {
-    setSettings(prev => ({ ...prev, animationsEnabled: !prev.animationsEnabled }))
+  const handleToggleAnimations = () => {
+    const newLevel = animationLevel === 'none' ? 'moderate' : 'none'
+    setAnimationLevel(newLevel)
   }
 
-  const toggleTheme = () => {
-    setSettings(prev => ({
-      ...prev,
-      theme: prev.theme === 'dark' ? 'light' : 'dark',
-    }))
+  const handleToggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+    playClick()
   }
 
   return (
@@ -102,7 +87,7 @@ export default function SettingsMenu() {
                 {/* Sound Toggle */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {settings.soundEnabled ? (
+                    {soundEnabled ? (
                       <FiVolume2 className="text-gold-bright" size={20} />
                     ) : (
                       <FiVolumeX className="text-platinum-muted" size={20} />
@@ -112,19 +97,19 @@ export default function SettingsMenu() {
                         Sound Effects
                       </div>
                       <div className="text-platinum-dark text-xs">
-                        {settings.soundEnabled ? 'Enabled' : 'Disabled'}
+                        {soundEnabled ? 'Enabled' : 'Disabled'}
                       </div>
                     </div>
                   </div>
                   <button
-                    onClick={toggleSound}
+                    onClick={handleToggleSound}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      settings.soundEnabled ? 'bg-gold-main' : 'bg-platinum-dark'
+                      soundEnabled ? 'bg-gold-main' : 'bg-platinum-dark'
                     }`}
                   >
                     <motion.span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        settings.soundEnabled ? 'translate-x-6' : 'translate-x-1'
+                        soundEnabled ? 'translate-x-6' : 'translate-x-1'
                       }`}
                       layout
                     />
@@ -134,7 +119,7 @@ export default function SettingsMenu() {
                 {/* Animations Toggle */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {settings.animationsEnabled ? (
+                    {animationLevel !== 'none' ? (
                       <FiZap className="text-emerald-bright" size={20} />
                     ) : (
                       <FiZapOff className="text-platinum-muted" size={20} />
@@ -144,19 +129,19 @@ export default function SettingsMenu() {
                         Animations
                       </div>
                       <div className="text-platinum-dark text-xs">
-                        {settings.animationsEnabled ? 'Enabled' : 'Reduced'}
+                        {animationLevel !== 'none' ? 'Enabled' : 'Reduced'}
                       </div>
                     </div>
                   </div>
                   <button
-                    onClick={toggleAnimations}
+                    onClick={handleToggleAnimations}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      settings.animationsEnabled ? 'bg-emerald-main' : 'bg-platinum-dark'
+                      animationLevel !== 'none' ? 'bg-emerald-main' : 'bg-platinum-dark'
                     }`}
                   >
                     <motion.span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        settings.animationsEnabled ? 'translate-x-6' : 'translate-x-1'
+                        animationLevel !== 'none' ? 'translate-x-6' : 'translate-x-1'
                       }`}
                       layout
                     />
@@ -166,7 +151,7 @@ export default function SettingsMenu() {
                 {/* Theme Toggle */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {settings.theme === 'dark' ? (
+                    {theme === 'dark' ? (
                       <FiMoon className="text-platinum-bright" size={20} />
                     ) : (
                       <FiSun className="text-gold-bright" size={20} />
@@ -176,19 +161,19 @@ export default function SettingsMenu() {
                         Theme
                       </div>
                       <div className="text-platinum-dark text-xs">
-                        {settings.theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+                        {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
                       </div>
                     </div>
                   </div>
                   <button
-                    onClick={toggleTheme}
+                    onClick={handleToggleTheme}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      settings.theme === 'dark' ? 'bg-platinum-main' : 'bg-gold-main'
+                      theme === 'dark' ? 'bg-platinum-main' : 'bg-gold-main'
                     }`}
                   >
                     <motion.span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        settings.theme === 'dark' ? 'translate-x-6' : 'translate-x-1'
+                        theme === 'dark' ? 'translate-x-6' : 'translate-x-1'
                       }`}
                       layout
                     />

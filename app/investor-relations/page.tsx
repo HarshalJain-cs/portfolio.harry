@@ -17,6 +17,7 @@ import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import { FiMail, FiMapPin, FiGithub, FiLinkedin, FiSend, FiClock, FiCheckCircle, FiAlertCircle } from 'react-icons/fi'
 import { staggerContainer, staggerItem, fadeIn } from '@/lib/animations'
+import { submitContactForm } from '@/lib/formHandler'
 
 export default function InvestorRelationsPage() {
   const [formData, setFormData] = useState({
@@ -28,27 +29,39 @@ export default function InvestorRelationsPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [statusMessage, setStatusMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus('idle')
+    setStatusMessage('')
 
-    // Simulate form submission (replace with actual API call or FormSpree)
-    setTimeout(() => {
-      setSubmitStatus('success')
+    try {
+      const result = await submitContactForm(formData)
+
+      if (result.success) {
+        setSubmitStatus('success')
+        setStatusMessage(result.message)
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+          inquiry_type: 'general',
+        })
+        // Auto-clear success message after 5 seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000)
+      } else {
+        setSubmitStatus('error')
+        setStatusMessage(result.message)
+      }
+    } catch (error) {
+      setSubmitStatus('error')
+      setStatusMessage('An unexpected error occurred. Please try again.')
+    } finally {
       setIsSubmitting(false)
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-        inquiry_type: 'general',
-      })
-
-      // Auto-clear success message after 5 seconds
-      setTimeout(() => setSubmitStatus('idle'), 5000)
-    }, 1500)
+    }
   }
 
   const handleChange = (
@@ -347,7 +360,29 @@ export default function InvestorRelationsPage() {
                                 Message Sent Successfully!
                               </div>
                               <p className="text-sm text-platinum-muted">
-                                Thank you for reaching out. I'll get back to you soon.
+                                {statusMessage || "Thank you for reaching out. I'll get back to you soon."}
+                              </p>
+                            </div>
+                          </div>
+                        </GlassCard>
+                      </motion.div>
+                    )}
+
+                    {/* Error Message */}
+                    {submitStatus === 'error' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                      >
+                        <GlassCard variant="data" className="border-l-4 border-platinum-dark">
+                          <div className="flex items-center gap-3">
+                            <FiAlertCircle className="text-platinum-muted text-xl flex-shrink-0" />
+                            <div>
+                              <div className="font-mono text-sm font-bold text-platinum-main mb-1">
+                                Submission Failed
+                              </div>
+                              <p className="text-sm text-platinum-muted">
+                                {statusMessage}
                               </p>
                             </div>
                           </div>
