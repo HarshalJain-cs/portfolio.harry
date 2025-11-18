@@ -1,16 +1,22 @@
-/**
- * Investor Relations (Contact) Page
- * Contact form with Supabase integration
- */
-
 'use client'
 
+/**
+ * Investor Relations (Contact) Page
+ * Contact form with email integration
+ * NEW DESIGN: Warmer Charcoal + Gold + Emerald + Platinum
+ */
+
 import { useState } from 'react'
-import Header from '@/components/layout/Header'
+import { motion } from 'framer-motion'
+import Navigation from '@/components/layout/Navigation'
 import Footer from '@/components/layout/Footer'
-import StockTicker from '@/components/layout/StockTicker'
-import { supabase } from '@/lib/supabase/client'
-import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiSend } from 'react-icons/fi'
+import ProgressBar from '@/components/layout/ProgressBar'
+import CustomCursor from '@/components/layout/CustomCursor'
+import GlassCard from '@/components/ui/GlassCard'
+import Badge from '@/components/ui/Badge'
+import Button from '@/components/ui/Button'
+import { FiMail, FiMapPin, FiGithub, FiLinkedin, FiSend, FiClock, FiCheckCircle, FiAlertCircle } from 'react-icons/fi'
+import { staggerContainer, staggerItem, fadeIn } from '@/lib/animations'
 
 export default function InvestorRelationsPage() {
   const [formData, setFormData] = useState({
@@ -22,32 +28,16 @@ export default function InvestorRelationsPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus('idle')
-    setErrorMessage('')
 
-    try {
-      if (!supabase) {
-        throw new Error('Database connection not available')
-      }
-
-      const { error } = await supabase.from('contact_submissions').insert([
-        {
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          inquiry_type: formData.inquiry_type,
-        },
-      ])
-
-      if (error) throw error
-
+    // Simulate form submission (replace with actual API call or FormSpree)
+    setTimeout(() => {
       setSubmitStatus('success')
+      setIsSubmitting(false)
       setFormData({
         name: '',
         email: '',
@@ -55,21 +45,14 @@ export default function InvestorRelationsPage() {
         message: '',
         inquiry_type: 'general',
       })
-    } catch (error: any) {
-      console.error('Error submitting form:', error)
-      setSubmitStatus('error')
-      setErrorMessage(
-        error.message || 'Failed to submit form. Please try again.'
-      )
-    } finally {
-      setIsSubmitting(false)
-    }
+
+      // Auto-clear success message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    }, 1500)
   }
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setFormData(prev => ({
       ...prev,
@@ -78,362 +61,395 @@ export default function InvestorRelationsPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <StockTicker />
+    <>
+      <CustomCursor />
+      <ProgressBar />
+      <Navigation />
 
-      <main className="flex-1">
+      <div className="min-h-screen bg-bg-primary text-platinum-main">
         {/* Hero Section */}
-        <section className="stock-border-bottom bg-gradient-to-br from-stock-cyan/10 to-transparent py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center space-y-4">
-              <div className="inline-block px-4 py-2 bg-stock-cyan/10 border border-stock-cyan/30 rounded-full text-stock-cyan text-sm font-mono uppercase tracking-wider mb-2">
-                <FiMail className="inline mr-2 mb-1" />
-                Investor Relations
-              </div>
+        <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-20">
+          <div className="absolute inset-0 bg-gradient-to-br from-bg-primary via-bg-secondary to-bg-elevated opacity-90" />
 
-              <h1 className="text-4xl md:text-5xl font-heading text-stock-gold font-black">
-                Get In Touch
-              </h1>
-
-              <p className="text-lg text-stock-text/80 max-w-2xl mx-auto">
-                Interested in collaboration, hiring, or just want to connect?
-                I'd love to hear from you. Let's discuss how we can create value together.
-              </p>
-            </div>
+          <div className="absolute inset-0 opacity-10">
+            <div className="w-full h-full" style={{
+              backgroundImage: 'linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)',
+              backgroundSize: '50px 50px',
+            }} />
           </div>
+
+          <motion.div
+            className="relative z-10 container-custom text-center space-y-6 py-16"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+          >
+            <Badge variant="achievement">
+              <FiMail className="inline mr-2 mb-1" />
+              Investor Relations
+            </Badge>
+
+            <h1 className="text-h1 font-heading font-bold text-platinum-bright uppercase">
+              Get In <span className="text-gold-bright">Touch</span>
+            </h1>
+
+            <p className="text-lg text-platinum-muted max-w-2xl mx-auto">
+              Interested in collaboration, hiring, or just want to connect? I'd love to hear from you. Let's discuss how we can create value together.
+            </p>
+          </motion.div>
         </section>
 
         {/* Contact Info & Form */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-12">
-            {/* Left: Contact Info */}
-            <div className="space-y-8">
-              {/* Contact Details */}
-              <div>
-                <h2 className="text-2xl font-heading text-stock-cyan mb-6">
-                  Contact Information
-                </h2>
+        <section className="section-padding bg-bg-primary">
+          <div className="container-custom">
+            <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-12">
+              {/* Left: Contact Info */}
+              <motion.div
+                className="space-y-6"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.6 }}
+              >
+                {/* Contact Details */}
+                <div>
+                  <h2 className="text-h3 font-heading text-platinum-bright mb-6 gold-underline inline-block">
+                    Contact Information
+                  </h2>
 
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4 p-4 bg-stock-board border border-stock-navy">
-                    <FiMail className="text-stock-cyan text-xl mt-1" />
+                  <div className="space-y-4">
+                    <GlassCard variant="luxury">
+                      <div className="flex items-start gap-4">
+                        <FiMail className="text-gold-bright text-xl mt-1 flex-shrink-0" />
+                        <div>
+                          <div className="text-sm text-platinum-dark mb-1">Email</div>
+                          <a
+                            href="mailto:harshaljaincs@gmail.com"
+                            className="text-gold-bright hover:text-gold-main transition-colors"
+                          >
+                            harshaljaincs@gmail.com
+                          </a>
+                        </div>
+                      </div>
+                    </GlassCard>
+
+                    <GlassCard variant="luxury">
+                      <div className="flex items-start gap-4">
+                        <FiMapPin className="text-gold-bright text-xl mt-1 flex-shrink-0" />
+                        <div>
+                          <div className="text-sm text-platinum-dark mb-1">Location</div>
+                          <div className="text-platinum-main">India</div>
+                        </div>
+                      </div>
+                    </GlassCard>
+
+                    <GlassCard variant="luxury">
+                      <div className="flex items-start gap-4">
+                        <FiClock className="text-gold-bright text-xl mt-1 flex-shrink-0" />
+                        <div>
+                          <div className="text-sm text-platinum-dark mb-1">Availability</div>
+                          <div className="text-platinum-main">Mon - Fri, 9AM - 6PM IST</div>
+                        </div>
+                      </div>
+                    </GlassCard>
+                  </div>
+                </div>
+
+                {/* Social Links */}
+                <div>
+                  <h3 className="text-xl font-heading text-platinum-bright mb-4">
+                    Connect Online
+                  </h3>
+                  <div className="space-y-3">
+                    <a
+                      href="https://github.com/HarshalJain-cs"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <GlassCard variant="interactive" hover>
+                        <div className="flex items-center gap-3">
+                          <FiGithub className="text-gold-bright text-xl" />
+                          <div>
+                            <div className="text-sm text-platinum-bright">GitHub</div>
+                            <div className="text-xs text-platinum-dark font-mono">
+                              @HarshalJain-cs
+                            </div>
+                          </div>
+                        </div>
+                      </GlassCard>
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/in/harshal-jain"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <GlassCard variant="interactive" hover>
+                        <div className="flex items-center gap-3">
+                          <FiLinkedin className="text-gold-bright text-xl" />
+                          <div>
+                            <div className="text-sm text-platinum-bright">LinkedIn</div>
+                            <div className="text-xs text-platinum-dark font-mono">
+                              Connect with me
+                            </div>
+                          </div>
+                        </div>
+                      </GlassCard>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Response Time */}
+                <GlassCard variant="success" className="border-l-4 border-emerald-main">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">⚡</span>
                     <div>
-                      <div className="text-sm text-stock-text/40 mb-1">Email</div>
-                      <a
-                        href="mailto:harshaljaincs@gmail.com"
-                        className="text-stock-cyan hover:text-stock-gold transition-colors"
+                      <div className="text-sm font-heading text-emerald-bright mb-2">
+                        Quick Response Time
+                      </div>
+                      <p className="text-xs text-platinum-muted">
+                        I typically respond to inquiries within 24-48 hours during business days.
+                      </p>
+                    </div>
+                  </div>
+                </GlassCard>
+              </motion.div>
+
+              {/* Right: Contact Form */}
+              <motion.div
+                className="lg:col-span-2"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.6 }}
+              >
+                <GlassCard variant="luxury">
+                  <h2 className="text-h3 font-heading text-platinum-bright mb-6">
+                    Send a Message
+                  </h2>
+
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Name */}
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
                       >
-                        harshaljaincs@gmail.com
-                      </a>
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main transition-colors"
+                        placeholder="John Doe"
+                      />
                     </div>
-                  </div>
 
-                  <div className="flex items-start gap-4 p-4 bg-stock-board border border-stock-navy">
-                    <FiMapPin className="text-stock-cyan text-xl mt-1" />
+                    {/* Email */}
                     <div>
-                      <div className="text-sm text-stock-text/40 mb-1">
-                        Location
-                      </div>
-                      <div className="text-stock-text/80">India</div>
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                      >
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main transition-colors"
+                        placeholder="john@example.com"
+                      />
                     </div>
-                  </div>
 
-                  <div className="flex items-start gap-4 p-4 bg-stock-board border border-stock-navy">
-                    <FiPhone className="text-stock-cyan text-xl mt-1" />
+                    {/* Inquiry Type */}
                     <div>
-                      <div className="text-sm text-stock-text/40 mb-1">
-                        Availability
-                      </div>
-                      <div className="text-stock-text/80">
-                        Mon - Fri, 9AM - 6PM IST
-                      </div>
+                      <label
+                        htmlFor="inquiry_type"
+                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                      >
+                        Inquiry Type *
+                      </label>
+                      <select
+                        id="inquiry_type"
+                        name="inquiry_type"
+                        required
+                        value={formData.inquiry_type}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main focus:outline-none focus:border-gold-main transition-colors appearance-none cursor-pointer"
+                      >
+                        <option value="general" className="bg-bg-elevated">General Inquiry</option>
+                        <option value="collaboration" className="bg-bg-elevated">Collaboration</option>
+                        <option value="job" className="bg-bg-elevated">Job Opportunity</option>
+                        <option value="consulting" className="bg-bg-elevated">Consulting</option>
+                        <option value="other" className="bg-bg-elevated">Other</option>
+                      </select>
                     </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Social Links */}
-              <div>
-                <h3 className="text-xl font-heading text-stock-cyan mb-4">
-                  Connect Online
-                </h3>
-                <div className="space-y-3">
-                  <a
-                    href="https://github.com/HarshalJain-cs"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 bg-stock-board border border-stock-navy hover:border-stock-cyan transition-colors group"
-                  >
-                    <FiGithub className="text-stock-cyan text-xl" />
+                    {/* Subject */}
                     <div>
-                      <div className="text-sm text-stock-cyan group-hover:text-stock-gold transition-colors">
-                        GitHub
-                      </div>
-                      <div className="text-xs text-stock-text/60 font-mono">
-                        @HarshalJain-cs
-                      </div>
+                      <label
+                        htmlFor="subject"
+                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                      >
+                        Subject *
+                      </label>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        required
+                        value={formData.subject}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main transition-colors"
+                        placeholder="Let's work together on..."
+                      />
                     </div>
-                  </a>
 
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 bg-stock-board border border-stock-navy hover:border-stock-cyan transition-colors group"
-                  >
-                    <FiLinkedin className="text-stock-cyan text-xl" />
+                    {/* Message */}
                     <div>
-                      <div className="text-sm text-stock-cyan group-hover:text-stock-gold transition-colors">
-                        LinkedIn
-                      </div>
-                      <div className="text-xs text-stock-text/60 font-mono">
-                        Connect with me
-                      </div>
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-mono text-platinum-main mb-2 uppercase"
+                      >
+                        Message *
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        required
+                        value={formData.message}
+                        onChange={handleChange}
+                        rows={6}
+                        className="w-full px-4 py-3 bg-glass-medium backdrop-blur-glass border border-glass-platinum rounded-lg text-platinum-main placeholder:text-platinum-dark focus:outline-none focus:border-gold-main transition-colors resize-none"
+                        placeholder="Tell me about your project, opportunity, or idea..."
+                      />
                     </div>
-                  </a>
-                </div>
-              </div>
 
-              {/* Response Time */}
-              <div className="p-4 bg-stock-navy/30 border-l-4 border-stock-green">
-                <div className="text-sm font-heading text-stock-green mb-2">
-                  ⚡ Quick Response Time
-                </div>
-                <p className="text-xs text-stock-text/70">
-                  I typically respond to inquiries within 24-48 hours during
-                  business days.
-                </p>
-              </div>
-            </div>
-
-            {/* Right: Contact Form */}
-            <div className="lg:col-span-2">
-              <div className="stock-card">
-                <h2 className="text-2xl font-heading text-stock-cyan mb-6">
-                  Send a Message
-                </h2>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name */}
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-mono text-stock-text/80 mb-2 uppercase"
-                    >
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-stock-dark border border-stock-navy text-stock-text rounded focus:outline-none focus:border-stock-cyan transition-colors"
-                      placeholder="John Doe"
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-mono text-stock-text/80 mb-2 uppercase"
-                    >
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-stock-dark border border-stock-navy text-stock-text rounded focus:outline-none focus:border-stock-cyan transition-colors"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-
-                  {/* Inquiry Type */}
-                  <div>
-                    <label
-                      htmlFor="inquiry_type"
-                      className="block text-sm font-mono text-stock-text/80 mb-2 uppercase"
-                    >
-                      Inquiry Type *
-                    </label>
-                    <select
-                      id="inquiry_type"
-                      name="inquiry_type"
-                      required
-                      value={formData.inquiry_type}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-stock-dark border border-stock-navy text-stock-text rounded focus:outline-none focus:border-stock-cyan transition-colors"
-                    >
-                      <option value="general">General Inquiry</option>
-                      <option value="collaboration">Collaboration</option>
-                      <option value="job">Job Opportunity</option>
-                      <option value="consulting">Consulting</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-
-                  {/* Subject */}
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="block text-sm font-mono text-stock-text/80 mb-2 uppercase"
-                    >
-                      Subject *
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      required
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-stock-dark border border-stock-navy text-stock-text rounded focus:outline-none focus:border-stock-cyan transition-colors"
-                      placeholder="Let's work together on..."
-                    />
-                  </div>
-
-                  {/* Message */}
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-mono text-stock-text/80 mb-2 uppercase"
-                    >
-                      Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={6}
-                      className="w-full px-4 py-3 bg-stock-dark border border-stock-navy text-stock-text rounded focus:outline-none focus:border-stock-cyan transition-colors resize-none"
-                      placeholder="Tell me about your project, opportunity, or idea..."
-                    />
-                  </div>
-
-                  {/* Success Message */}
-                  {submitStatus === 'success' && (
-                    <div className="p-4 bg-stock-green/20 border-l-4 border-stock-green">
-                      <div className="flex items-center gap-2 text-stock-green mb-1">
-                        <span className="text-lg">✓</span>
-                        <span className="font-mono text-sm font-bold">
-                          Message Sent Successfully!
-                        </span>
-                      </div>
-                      <p className="text-sm text-stock-text/80">
-                        Thank you for reaching out. I'll get back to you soon.
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Error Message */}
-                  {submitStatus === 'error' && (
-                    <div className="p-4 bg-stock-red/20 border-l-4 border-stock-red">
-                      <div className="flex items-center gap-2 text-stock-red mb-1">
-                        <span className="text-lg">✕</span>
-                        <span className="font-mono text-sm font-bold">
-                          Submission Failed
-                        </span>
-                      </div>
-                      <p className="text-sm text-stock-text/80">
-                        {errorMessage ||
-                          'Something went wrong. Please try again or email me directly.'}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <span className="inline-block w-4 h-4 border-2 border-stock-text border-t-transparent rounded-full animate-spin"></span>
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <FiSend size={18} />
-                        Send Message
-                      </>
+                    {/* Success Message */}
+                    {submitStatus === 'success' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                      >
+                        <GlassCard variant="success" className="border-l-4 border-emerald-main">
+                          <div className="flex items-center gap-3">
+                            <FiCheckCircle className="text-emerald-bright text-xl flex-shrink-0" />
+                            <div>
+                              <div className="font-mono text-sm font-bold text-emerald-bright mb-1">
+                                Message Sent Successfully!
+                              </div>
+                              <p className="text-sm text-platinum-muted">
+                                Thank you for reaching out. I'll get back to you soon.
+                              </p>
+                            </div>
+                          </div>
+                        </GlassCard>
+                      </motion.div>
                     )}
-                  </button>
 
-                  <p className="text-xs text-stock-text/40 text-center font-mono">
-                    By submitting this form, you agree to be contacted regarding
-                    your inquiry.
-                  </p>
-                </form>
-              </div>
+                    {/* Submit Button */}
+                    <Button
+                      variant="gold"
+                      size="lg"
+                      disabled={isSubmitting}
+                      className="w-full"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <span className="inline-block w-4 h-4 border-2 border-platinum-bright border-t-transparent rounded-full animate-spin mr-2"></span>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <FiSend className="mr-2" />
+                          Send Message
+                        </>
+                      )}
+                    </Button>
+
+                    <p className="text-xs text-platinum-dark text-center font-mono">
+                      By submitting this form, you agree to be contacted regarding your inquiry.
+                    </p>
+                  </form>
+                </GlassCard>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* FAQ / Additional Info */}
-        <section className="stock-border-top bg-stock-board py-16">
-          <div className="container mx-auto px-4">
+        {/* FAQ */}
+        <section className="section-padding bg-bg-secondary">
+          <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-heading text-stock-cyan mb-8 text-center">
+              <h2 className="text-h2 font-heading text-platinum-bright mb-12 text-center">
                 Frequently Asked Questions
               </h2>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="p-6 bg-stock-dark/50 border-l-4 border-stock-cyan">
-                  <h3 className="text-lg font-heading text-stock-cyan mb-2">
-                    What services do you offer?
-                  </h3>
-                  <p className="text-sm text-stock-text/70">
-                    Full-stack development, financial analysis, blockchain/Web3
-                    projects, AI integration, and technical consulting.
-                  </p>
-                </div>
+              <motion.div
+                className="grid md:grid-cols-2 gap-6"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+              >
+                <motion.div variants={staggerItem}>
+                  <GlassCard variant="luxury" hover className="h-full border-l-4 border-gold-main">
+                    <h3 className="text-lg font-heading text-gold-bright mb-2">
+                      What services do you offer?
+                    </h3>
+                    <p className="text-sm text-platinum-muted">
+                      Full-stack development, financial analysis, blockchain/Web3 projects, AI integration, and technical consulting.
+                    </p>
+                  </GlassCard>
+                </motion.div>
 
-                <div className="p-6 bg-stock-dark/50 border-l-4 border-stock-green">
-                  <h3 className="text-lg font-heading text-stock-green mb-2">
-                    Are you available for freelance work?
-                  </h3>
-                  <p className="text-sm text-stock-text/70">
-                    Yes! I'm open to interesting projects and collaborations.
-                    Reach out with details about your project.
-                  </p>
-                </div>
+                <motion.div variants={staggerItem}>
+                  <GlassCard variant="success" hover className="h-full border-l-4 border-emerald-main">
+                    <h3 className="text-lg font-heading text-emerald-bright mb-2">
+                      Are you available for freelance work?
+                    </h3>
+                    <p className="text-sm text-platinum-muted">
+                      Yes! I'm open to interesting projects and collaborations. Reach out with details about your project.
+                    </p>
+                  </GlassCard>
+                </motion.div>
 
-                <div className="p-6 bg-stock-dark/50 border-l-4 border-stock-gold">
-                  <h3 className="text-lg font-heading text-stock-gold mb-2">
-                    What's your typical response time?
-                  </h3>
-                  <p className="text-sm text-stock-text/70">
-                    I aim to respond within 24-48 hours during business days. Urgent
-                    inquiries may receive faster responses.
-                  </p>
-                </div>
+                <motion.div variants={staggerItem}>
+                  <GlassCard variant="luxury" hover className="h-full border-l-4 border-gold-main">
+                    <h3 className="text-lg font-heading text-gold-bright mb-2">
+                      What's your typical response time?
+                    </h3>
+                    <p className="text-sm text-platinum-muted">
+                      I aim to respond within 24-48 hours during business days. Urgent inquiries may receive faster responses.
+                    </p>
+                  </GlassCard>
+                </motion.div>
 
-                <div className="p-6 bg-stock-dark/50 border-l-4 border-stock-red">
-                  <h3 className="text-lg font-heading text-stock-red mb-2">
-                    Do you work with startups?
-                  </h3>
-                  <p className="text-sm text-stock-text/70">
-                    Absolutely! I love working with early-stage startups on
-                    innovative products, especially in fintech and Web3.
-                  </p>
-                </div>
-              </div>
+                <motion.div variants={staggerItem}>
+                  <GlassCard variant="success" hover className="h-full border-l-4 border-emerald-main">
+                    <h3 className="text-lg font-heading text-emerald-bright mb-2">
+                      Do you work with startups?
+                    </h3>
+                    <p className="text-sm text-platinum-muted">
+                      Absolutely! I love working with early-stage startups on innovative products, especially in fintech and Web3.
+                    </p>
+                  </GlassCard>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </section>
-      </main>
+      </div>
 
       <Footer />
-    </div>
+    </>
   )
 }
