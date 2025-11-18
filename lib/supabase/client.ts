@@ -8,9 +8,22 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
-// Check if Supabase is configured
-const isSupabaseConfigured = supabaseUrl && supabaseAnonKey &&
-  supabaseUrl !== '' && supabaseAnonKey !== ''
+// Check if Supabase URL is a valid HTTP/HTTPS URL
+const isValidUrl = (url: string) => {
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
+// Check if Supabase is configured with valid values
+const isSupabaseConfigured = supabaseUrl &&
+  supabaseAnonKey &&
+  isValidUrl(supabaseUrl) &&
+  !supabaseUrl.includes('your_supabase') &&
+  !supabaseAnonKey.includes('your_supabase')
 
 /**
  * Supabase client instance

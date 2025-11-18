@@ -21,8 +21,19 @@ export default function LoadingScreen({
   duration = 2000
 }: LoadingScreenProps) {
   const [isVisible, setIsVisible] = useState(true)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Generate particle positions once on mount to avoid hydration mismatch
+  const [particles] = useState(() =>
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+    }))
+  )
 
   useEffect(() => {
+    setIsMounted(true)
     const timer = setTimeout(() => {
       setIsVisible(false)
       if (onComplete) {
@@ -44,13 +55,13 @@ export default function LoadingScreen({
         >
           {/* Animated particles background */}
           <div className="absolute inset-0 overflow-hidden">
-            {[...Array(20)].map((_, i) => (
+            {isMounted && particles.map((particle, i) => (
               <motion.div
-                key={i}
+                key={particle.id}
                 className="absolute w-2 h-2 rounded-full bg-gold-main"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
+                  left: `${particle.left}%`,
+                  top: `${particle.top}%`,
                 }}
                 custom={i * 0.5}
                 variants={particleAnimation}
