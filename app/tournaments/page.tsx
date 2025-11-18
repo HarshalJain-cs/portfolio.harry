@@ -128,7 +128,7 @@ export default function TournamentsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiAward className="inline mr-2 mb-1" />
+              <FiAward className="inline mr-2" />
               Market Tournaments
             </Badge>
 

@@ -137,7 +137,7 @@ export default function InvestorReviewsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiStar className="inline mr-2 mb-1" />
+              <FiStar className="inline" />
               Investor Reviews
             </Badge>
 
@@ -267,25 +267,25 @@ export default function InvestorReviewsPage() {
 
                       {/* Author Info */}
                       <div className="pt-4 border-t border-glass-platinum">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <h4 className="font-heading text-platinum-bright">
+                              <h4 className="font-heading text-platinum-bright font-medium">
                                 {testimonial.name}
                               </h4>
                               {testimonial.is_featured && (
-                                <FiCheckCircle className="text-emerald-bright" size={14} title="Verified" />
+                                <FiCheckCircle className="text-emerald-bright flex-shrink-0" size={14} title="Verified" />
                               )}
                             </div>
-                            <div className="text-xs text-platinum-muted mb-1">
+                            <div className="text-xs text-platinum-muted mb-0.5">
                               {testimonial.designation}
                             </div>
                             {testimonial.organization && (
-                              <div className="text-xs text-gold-bright">
+                              <div className="text-xs text-gold-bright mb-2">
                                 {testimonial.organization}
                               </div>
                             )}
-                            <Badge variant="tech" className="mt-2">{testimonial.relationship}</Badge>
+                            <Badge variant="tech">{testimonial.relationship}</Badge>
                           </div>
 
                           {testimonial.linkedin_url && (
@@ -293,10 +293,10 @@ export default function InvestorReviewsPage() {
                               href={testimonial.linkedin_url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-gold-bright hover:text-gold-main transition-colors"
+                              className="flex items-center justify-center w-9 h-9 rounded-lg bg-gold-main/10 text-gold-bright hover:text-gold-main hover:bg-gold-main/20 transition-all flex-shrink-0"
                               aria-label="LinkedIn Profile"
                             >
-                              <FiLinkedin size={20} />
+                              <FiLinkedin size={18} />
                             </a>
                           )}
                         </div>

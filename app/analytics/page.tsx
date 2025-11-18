@@ -78,7 +78,7 @@ export default function AnalyticsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiTrendingUp className="inline mr-2 mb-1" />
+              <FiTrendingUp className="inline mr-2" />
               Analytics Dashboard
             </Badge>
 

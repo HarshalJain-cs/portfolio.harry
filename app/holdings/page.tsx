@@ -122,7 +122,7 @@ export default function HoldingsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiTarget className="inline mr-2 mb-1" />
+              <FiTarget className="inline mr-2" />
               Holdings Portfolio
             </Badge>
 

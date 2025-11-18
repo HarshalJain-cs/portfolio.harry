@@ -98,7 +98,7 @@ export default function InvestorRelationsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiMail className="inline mr-2 mb-1" />
+              <FiMail className="inline mr-2" />
               Investor Relations
             </Badge>
 

@@ -121,7 +121,7 @@ export default function MarketCommentaryPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiBookOpen className="inline mr-2 mb-1" />
+              <FiBookOpen className="inline mr-2" />
               Market Commentary
             </Badge>
 

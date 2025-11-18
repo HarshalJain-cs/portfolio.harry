@@ -81,7 +81,7 @@ export default function ResearchPapersPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiFileText className="inline mr-2 mb-1" />
+              <FiFileText className="inline mr-2" />
               Research Papers
             </Badge>
 

@@ -136,7 +136,7 @@ export default function TradingHistoryPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiBriefcase className="inline mr-2 mb-1" />
+              <FiBriefcase className="inline mr-2" />
               Trading History
             </Badge>
 

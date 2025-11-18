@@ -87,7 +87,7 @@ export default function CommunityDividendsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiHeart className="inline mr-2 mb-1" />
+              <FiHeart className="inline mr-2" />
               Community Dividends
             </Badge>
 

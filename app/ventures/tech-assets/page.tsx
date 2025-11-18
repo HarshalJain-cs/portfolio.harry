@@ -153,7 +153,7 @@ export default function TechAssetsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiCode className="inline mr-2 mb-1" />
+              <FiCode className="inline mr-2" />
               Tech Assets Portfolio
             </Badge>
 

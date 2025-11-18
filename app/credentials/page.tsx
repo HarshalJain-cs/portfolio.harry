@@ -141,7 +141,7 @@ export default function CredentialsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiAward className="inline mr-2 mb-1" />
+              <FiAward className="inline mr-2" />
               Professional Credentials
             </Badge>
 

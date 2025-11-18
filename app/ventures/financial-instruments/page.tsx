@@ -75,7 +75,7 @@ export default function FinancialInstrumentsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiTrendingUp className="inline mr-2 mb-1" />
+              <FiTrendingUp className="inline mr-2" />
               Financial Instruments
             </Badge>
 

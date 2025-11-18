@@ -156,7 +156,7 @@ export default function DownloadsPage() {
             animate="visible"
           >
             <Badge variant="achievement">
-              <FiDownload className="inline mr-2 mb-1" />
+              <FiDownload className="inline mr-2" />
               Download Center
             </Badge>
 
